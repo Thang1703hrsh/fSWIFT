@@ -1,0 +1,30 @@
+# Transform configuration with naming scheme that includes parameters 
+
+# Method to use (binary, threshold, threshold_and_scale, random, rank_based)
+method: threshold_and_scale
+
+# Parameters for binary transform
+binary:
+  top_percent: 75  # Set only top 75% to 1
+
+# Parameters for threshold transform
+threshold:
+  upper_threshold: 0.9
+  lower_threshold: -0.9
+
+# Parameters for threshold_and_scale transform
+threshold_and_scale:
+  min_val: -1.8
+  max_val: 1.8  
+  min_scale: 0.6
+  max_scale: 1.4
+
+# Parameters for random transform
+random:
+  min_val: 0.6
+  max_val: 1.4
+
+# Parameters for rank_based transform
+rank_based:
+  min_scale: 0.6
+  max_scale: 1.4 

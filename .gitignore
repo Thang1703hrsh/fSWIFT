@@ -1,0 +1,49 @@
+# ── Build / cache ─────────────────────────────────────────────
+output/
+outputs/
+.cache/
+.hydra/
+__pycache__/
+*.py[cod]
+*.pyo
+*.egg-info/
+
+# ── Editor / OS ───────────────────────────────────────────────
+.DS_Store
+.idea/
+.vscode/
+
+# ── Data & models (too large for git) ─────────────────────────
+data/
+data_hub/
+model_hub/
+eval_results/
+evaluation/
+generated-data/
+datasets/
+examples/
+models/
+
+# ── Scratch / draft files ─────────────────────────────────────
+SWIFT.pdf
+f-SWIFT-paper.tex
+distillation.tex
+ablation_plan.md
+token_weight_estimation_old.py
+train_v.py
+train_v1.py
+trainers_v.py
+trainers_v1.py
+Miniconda3-latest-Linux-x86_64.sh
+zznote.txt
+tea_debug.log
+_test.py
+
+# ── Scripts excluded from original repo ───────────────────────
+scripts/DPO-Training.sh
+scripts/TIS-DPO.sh
+
+# ── Secrets / env ─────────────────────────────────────────────
+.env
+*.env.*
+lm-evaluation-harness/

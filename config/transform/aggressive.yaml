@@ -1,0 +1,30 @@
+# Aggressive weight transform configurations
+
+# Method to use (binary, threshold, threshold_and_scale, random, rank_based)
+method: threshold_and_scale
+
+# Parameters for binary transform
+binary:
+  top_percent: 50  # Only top 50% set to 1, rest set to 0
+
+# Parameters for threshold transform
+threshold:
+  upper_threshold: 0.8
+  lower_threshold: -0.8
+
+# Parameters for threshold_and_scale transform
+threshold_and_scale:
+  min_val: -2.0
+  max_val: 2.0  
+  min_scale: 0.5
+  max_scale: 1.5
+
+# Parameters for random transform
+random:
+  min_val: 0.5
+  max_val: 1.5
+
+# Parameters for rank_based transform
+rank_based:
+  min_scale: 0.5
+  max_scale: 1.5 

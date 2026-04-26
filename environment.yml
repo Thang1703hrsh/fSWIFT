@@ -1,0 +1,13 @@
+name: WSPIN
+channels:
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/free/
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/pytorch/
+  - https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/
+dependencies:
+  - python=3.9
+  - pip=23.0
+  - cudatoolkit=11.8
+  - pytorch>=2.1.0 
+  - numpy
+

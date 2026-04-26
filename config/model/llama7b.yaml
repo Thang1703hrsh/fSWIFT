@@ -1,0 +1,8 @@
+name_or_path: /workspace/panleyi/models/llama2/llama-7b-sft-new
+tokenizer_name_or_path: null
+archive: null
+block_name: LlamaDecoderLayer
+
+policy_dtype: float32
+fsdp_policy_mp: null
+reference_dtype: float16

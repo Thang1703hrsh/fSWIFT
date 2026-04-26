@@ -1,0 +1,30 @@
+# Default weight transform configurations
+
+# Method to use (binary, threshold, threshold_and_scale, random, rank_based)
+method: binary
+
+# Parameters for binary transform
+binary:
+  top_percent: 100  # Percentage of items to set to 1, rest set to 0
+
+# Parameters for threshold transform
+threshold:
+  upper_threshold: 1.0
+  lower_threshold: -1.0
+
+# Parameters for threshold_and_scale transform
+threshold_and_scale:
+  min_val: -1.5
+  max_val: 1.5  
+  min_scale: 0.7
+  max_scale: 1.3
+
+# Parameters for random transform
+random:
+  min_val: 0.7
+  max_val: 1.3
+
+# Parameters for rank_based transform
+rank_based:
+  min_scale: 0.7
+  max_scale: 1.3 

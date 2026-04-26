@@ -1,0 +1,26 @@
+# f-SWIFT: f-Divergence Self-Play Weighted Fine-Tuning
+name: fswift
+
+# temperature parameter for the loss
+beta: 0.1
+
+# label smoothing (0 = standard f-SWIFT loss)
+label_smoothing: 0
+
+# if true, use a uniform (maximum entropy) reference model
+reference_free: false
+
+# use token-level importance weighting
+token_level: true
+
+# f-divergence type for the conjugate function f*
+# options: identity (recovers SWIFT), kl, js, chi2, hellinger, wasserstein
+f_divergence: js
+
+# (optional) adaptive f-scheduling across self-play iterations
+# uncomment and customize to use different f-divergences per iteration
+# f_schedule:
+#   - from_iter: 0
+#     f_divergence: js       # stable warm-up (iterations 0-1)
+#   - from_iter: 2
+#     f_divergence: kl       # aggressive refinement (iterations 2-3)
