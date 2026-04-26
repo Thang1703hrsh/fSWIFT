@@ -43,3 +43,18 @@ snapshot_download(
     local_dir_use_symlinks=False, 
 )
 print(f"Dataset successfully downloaded to {local_dir_dataset}!")
+
+###################################################################
+
+# DOWNLOAD SFT MODEL (Qwen1.5-1.8B fine-tuned)
+repo_id_sft = "ducthang1703/Qwen1.5-1.8B-sft-v2"
+local_dir_sft = "model_hub/Qwen1.5-1.8B/sft_v2"
+
+print(f"Downloading model from {repo_id_sft} to {local_dir_sft}...")
+snapshot_download(
+    repo_id=repo_id_sft,
+    repo_type="model",
+    local_dir=local_dir_sft,
+    local_dir_use_symlinks=False,
+)
+print(f"SFT Model successfully downloaded to {local_dir_sft}!")
