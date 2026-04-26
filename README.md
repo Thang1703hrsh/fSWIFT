@@ -86,11 +86,11 @@ To run a single divergence:
 bash scripts/run_all_divergences.sh js
 ```
 
-### Adaptive f-scheduling
+<!-- ### Adaptive f-scheduling
 
 ```bash
 bash scripts/_fSWIFT_adaptive_full.sh
-```
+``` -->
 
 Switches divergence mid-training (e.g. JS → KL at iteration 2).
 

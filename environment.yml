@@ -38,6 +38,10 @@ dependencies:
     - protobuf==6.33.6
     - einops==0.8.2
     - tiktoken==0.12.0
+    - tensor-parallel==2.0.0
+
+    # ── Data processing ──────────────────────────────────────
+    - beautifulsoup4==4.14.3
 
     # ── Evaluation ───────────────────────────────────────────
     - rouge_score==0.1.2
