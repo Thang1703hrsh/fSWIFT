@@ -16,7 +16,7 @@ f-SWIFT generalizes SWIFT by replacing the fixed KL-divergence objective with an
 f-SWIFT extends [SWIFT (NeurIPS 2025)](https://openreview.net/pdf?id=3VvdoCcVPU) along two axes:
 
 1. **f-Divergence generalization** — the self-play loss can use any f-divergence (JS, KL, χ², Hellinger, Wasserstein) by plugging in the corresponding conjugate function f*(t).
-2. **Adaptive f-scheduling** — different divergences can be applied at different self-play iterations (e.g. JS for stable warm-up → KL for aggressive refinement).
+<!-- 2. **Adaptive f-scheduling** — different divergences can be applied at different self-play iterations (e.g. JS for stable warm-up → KL for aggressive refinement). -->
 
 Token-level importance weighting from a teacher model is preserved from SWIFT, providing better learning signals than uniform token treatment.
 
