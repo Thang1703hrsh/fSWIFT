@@ -23,6 +23,7 @@ generated-data/
 datasets/
 examples/
 models/
+PRISM/
 
 # ── Scratch / draft files ─────────────────────────────────────
 SWIFT.pdf
