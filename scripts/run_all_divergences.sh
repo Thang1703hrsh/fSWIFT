@@ -1,6 +1,6 @@
 #!/bin/bash
 #SBATCH --account=le-lab
-#SBATCH --gres=gpu:L40S:8
+#SBATCH --gres=gpu:H100:8
 #SBATCH --mem=70GB
 #SBATCH --time=336:00:00
 #SBATCH --partition=general
@@ -12,6 +12,7 @@
 nvidia-smi
 eval "$(conda shell.bash hook)"
 conda activate /data/project/le-lab/conda_env/WSPIN
+export LD_PRELOAD=/data/project/le-lab/conda_env/WSPIN/lib/libstdc++.so.6 
 
 set -euo pipefail
 
