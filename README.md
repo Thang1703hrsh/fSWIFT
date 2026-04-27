@@ -35,10 +35,11 @@ Token-level importance weighting from a teacher model is preserved from SWIFT, p
 
 ```bash
 # 1. Create conda environment
-conda env create -f environment.yml
-conda activate WSPIN
+conda env create -f environment.yml --prefix /data/project/le-lab/conda_env/WSPIN
+conda activate /data/project/le-lab/conda_env/WSPIN
 
 # 2. Install lm-evaluation-harness (for evaluation)
+git clone https://github.com/EleutherAI/lm-evaluation-harness.git lm-evaluation-harness
 pip install -e lm-evaluation-harness/
 ```
 
@@ -75,7 +76,7 @@ Samples 50k examples from `HuggingFaceH4/ultrachat_200k` → `data/Ultrachat200k
 Run all 3 divergences (JS, KL, Wasserstein) × 4 iterations on 4× H100:
 
 ```bash
-bash scripts/run_all_divergences.sh
+sbatch scripts/run_all_divergences.sh
 ```
 
 Checkpoints saved to `model_hub/Qwen1.5-1.8B/fSWIFT_{js,kl,wasserstein}/ite{0..3}/`.

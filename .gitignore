@@ -47,3 +47,5 @@ scripts/TIS-DPO.sh
 .env
 *.env.*
 lm-evaluation-harness/
+
+*.out
