@@ -1,0 +1,399 @@
+Tue Apr 28 14:33:16 2026       
++-----------------------------------------------------------------------------------------+
+| NVIDIA-SMI 570.195.03             Driver Version: 570.195.03     CUDA Version: 12.8     |
+|-----------------------------------------+------------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id          Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |           Memory-Usage | GPU-Util  Compute M. |
+|                                         |                        |               MIG M. |
+|=========================================+========================+======================|
+|   0  NVIDIA L40S                    On  |   00000000:01:00.0 Off |                    0 |
+| N/A   35C    P8             33W /  350W |       0MiB /  46068MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   1  NVIDIA L40S                    On  |   00000000:21:00.0 Off |                    0 |
+| N/A   37C    P8             34W /  350W |       0MiB /  46068MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   2  NVIDIA L40S                    On  |   00000000:41:00.0 Off |                    0 |
+| N/A   36C    P8             35W /  350W |       0MiB /  46068MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   3  NVIDIA L40S                    On  |   00000000:61:00.0 Off |                    0 |
+| N/A   34C    P8             33W /  350W |       0MiB /  46068MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   4  NVIDIA L40S                    On  |   00000000:81:00.0 Off |                    0 |
+| N/A   34C    P8             34W /  350W |       0MiB /  46068MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   5  NVIDIA L40S                    On  |   00000000:A1:00.0 Off |                    0 |
+| N/A   35C    P8             32W /  350W |       0MiB /  46068MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   6  NVIDIA L40S                    On  |   00000000:C1:00.0 Off |                    0 |
+| N/A   34C    P8             35W /  350W |       0MiB /  46068MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+|   7  NVIDIA L40S                    On  |   00000000:E1:00.0 Off |                    0 |
+| N/A   31C    P8             33W /  350W |       0MiB /  46068MiB |      0%      Default |
+|                                         |                        |                  N/A |
++-----------------------------------------+------------------------+----------------------+
+                                                                                         
++-----------------------------------------------------------------------------------------+
+| Processes:                                                                              |
+|  GPU   GI   CI              PID   Type   Process name                        GPU Memory |
+|        ID   ID                                                               Usage      |
+|=========================================================================================|
+|  No running processes found                                                             |
++-----------------------------------------------------------------------------------------+
+============================================================
+ [DEBUG] f-SWIFT: All-Divergence Training Run
+ Node        : lair-g6
+ Divergences : js kl wasserstein
+ GPUs        : 8 x L40S
+ Samples     : ~500 per iteration
+ Started     : Tue Apr 28 02:33:19 PM EDT 2026
+ SKIP_EXISTING=0
+============================================================
+
+============================================================
+ [DEBUG] f-SWIFT pipeline: f* = js  (~500 samples)
+ Checkpoints : model_hub/Qwen1.5-1.8B/fSWIFT_js_debug/iteX/
+ Data        : data/Ultrachat200k/fSWIFT_js_debug/iteX/
+ Started     : Tue Apr 28 02:33:19 PM EDT 2026
+============================================================
+
+===== [js] Iteration 0 =====
+[js] ite0 — Generating 500 responses...
+The tokenizer you are loading from 'model_hub/Qwen1.5-1.8B/sft_v2' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+INFO 04-28 14:33:36 [utils.py:233] non-default args: {'dtype': 'float16', 'max_model_len': 32768, 'disable_log_stats': True, 'model': 'model_hub/Qwen1.5-1.8B/sft_v2'}
+INFO 04-28 14:33:36 [model.py:549] Resolved architecture: Qwen2ForCausalLM
+INFO 04-28 14:33:36 [model.py:2013] Downcasting torch.float32 to torch.float16.
+INFO 04-28 14:33:36 [model.py:1678] Using max model len 32768
+INFO 04-28 14:33:36 [scheduler.py:238] Chunked prefill is enabled with max_num_batched_tokens=8192.
+INFO 04-28 14:33:36 [vllm.py:790] Asynchronous scheduling is enabled.
+The tokenizer you are loading from 'model_hub/Qwen1.5-1.8B/sft_v2' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+(EngineCore pid=1355471) INFO 04-28 14:33:38 [core.py:105] Initializing a V1 LLM engine (v0.19.0) with config: model='model_hub/Qwen1.5-1.8B/sft_v2', speculative_config=None, tokenizer='model_hub/Qwen1.5-1.8B/sft_v2', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=False, dtype=torch.float16, max_seq_len=32768, download_dir=None, load_format=auto, tensor_parallel_size=1, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=False, quantization=None, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False), seed=0, served_model_name=model_hub/Qwen1.5-1.8B/sft_v2, enable_prefix_caching=True, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'splitting_ops': ['vllm::unified_attention', 'vllm::unified_attention_with_output', 'vllm::unified_mla_attention', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::gdn_attention_core', 'vllm::olmo_hybrid_gdn_full_forward', 'vllm::kda_attention', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_images_per_batch': 0, 'compile_sizes': [], 'compile_ranges_endpoints': [8192], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'size_asserts': False, 'alignment_asserts': False, 'scalar_asserts': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': True, 'static_all_moe_layers': []}
+(EngineCore pid=1355471) INFO 04-28 14:33:39 [parallel_state.py:1400] world_size=1 rank=0 local_rank=0 distributed_init_method=tcp://192.168.0.16:50313 backend=nccl
+(EngineCore pid=1355471) INFO 04-28 14:33:39 [parallel_state.py:1716] rank 0 in world size 1 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank N/A, EPLB rank N/A
+(EngineCore pid=1355471) INFO 04-28 14:33:40 [gpu_model_runner.py:4735] Starting to load model model_hub/Qwen1.5-1.8B/sft_v2...
+(EngineCore pid=1355471) INFO 04-28 14:33:42 [cuda.py:334] Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].
+(EngineCore pid=1355471) INFO 04-28 14:33:42 [flash_attn.py:596] Using FlashAttention version 2
+(EngineCore pid=1355471) INFO 04-28 14:33:42 [weight_utils.py:848] Prefetching checkpoint files into page cache started (in background)
+(EngineCore pid=1355471) Loading safetensors checkpoint shards:   0% Completed | 0/2 [00:00<?, ?it/s]
+(EngineCore pid=1355471) INFO 04-28 14:33:48 [weight_utils.py:825] Prefetching checkpoint files: 10% (1/2)
+(EngineCore pid=1355471) INFO 04-28 14:33:52 [weight_utils.py:825] Prefetching checkpoint files: 20% (2/2)
+(EngineCore pid=1355471) INFO 04-28 14:33:52 [weight_utils.py:843] Prefetching checkpoint files into page cache finished in 10.56s
+(EngineCore pid=1355471) Loading safetensors checkpoint shards:  50% Completed | 1/2 [00:10<00:10, 10.56s/it]
+(EngineCore pid=1355471) Loading safetensors checkpoint shards: 100% Completed | 2/2 [00:11<00:00,  4.76s/it]
+(EngineCore pid=1355471) Loading safetensors checkpoint shards: 100% Completed | 2/2 [00:11<00:00,  5.63s/it]
+(EngineCore pid=1355471) 
+(EngineCore pid=1355471) INFO 04-28 14:33:53 [default_loader.py:384] Loading weights took 11.35 seconds
+(EngineCore pid=1355471) INFO 04-28 14:33:54 [gpu_model_runner.py:4820] Model loading took 3.47 GiB memory and 12.731890 seconds
+(EngineCore pid=1355471) INFO 04-28 14:33:57 [backends.py:1051] Using cache directory: /u/tucnguye/.cache/vllm/torch_compile_cache/644be0cb56/rank_0_0/backbone for vLLM's torch.compile
+(EngineCore pid=1355471) INFO 04-28 14:33:57 [backends.py:1111] Dynamo bytecode transform time: 3.05 s
+(EngineCore pid=1355471) INFO 04-28 14:33:58 [backends.py:285] Directly load the compiled graph(s) for compile range (1, 8192) from the cache, took 0.731 s
+(EngineCore pid=1355471) INFO 04-28 14:33:58 [decorators.py:303] Directly load AOT compilation from path /u/tucnguye/.cache/vllm/torch_compile_cache/torch_aot_compile/89c9956daa4d3ec4f1e95fd3d512fbe2152b0fd49aec79effb71bb226ebff2a5/rank_0_0/model
+(EngineCore pid=1355471) INFO 04-28 14:33:58 [monitor.py:48] torch.compile took 3.93 s in total
+(EngineCore pid=1355471) INFO 04-28 14:33:58 [monitor.py:76] Initial profiling/warmup run took 0.15 s
+(EngineCore pid=1355471) INFO 04-28 14:33:59 [kv_cache_utils.py:829] Overriding num_gpu_blocks=0 with num_gpu_blocks_override=512
+(EngineCore pid=1355471) INFO 04-28 14:33:59 [gpu_model_runner.py:5876] Profiling CUDA graph memory: PIECEWISE=51 (largest=512), FULL=35 (largest=256)
+(EngineCore pid=1355471) INFO 04-28 14:34:00 [gpu_model_runner.py:5955] Estimated CUDA graph memory: 0.42 GiB total
+(EngineCore pid=1355471) INFO 04-28 14:34:00 [gpu_worker.py:436] Available KV cache memory: 35.75 GiB
+(EngineCore pid=1355471) INFO 04-28 14:34:00 [gpu_worker.py:470] In v0.19, CUDA graph memory profiling will be enabled by default (VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=1), which more accurately accounts for CUDA graph memory during KV cache allocation. To try it now, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=1 and increase --gpu-memory-utilization from 0.9000 to 0.9094 to maintain the same effective KV cache size.
+(EngineCore pid=1355471) INFO 04-28 14:34:00 [kv_cache_utils.py:1319] GPU KV cache size: 195,248 tokens
+(EngineCore pid=1355471) INFO 04-28 14:34:00 [kv_cache_utils.py:1324] Maximum concurrency for 32,768 tokens per request: 5.96x
+(EngineCore pid=1355471) Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):   0%|          | 0/51 [00:00<?, ?it/s]Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  12%|█▏        | 6/51 [00:00<00:00, 51.82it/s]Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  24%|██▎       | 12/51 [00:00<00:00, 53.93it/s]Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  35%|███▌      | 18/51 [00:00<00:00, 54.87it/s]Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  47%|████▋     | 24/51 [00:00<00:00, 56.20it/s]Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  59%|█████▉    | 30/51 [00:00<00:00, 57.21it/s]Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  73%|███████▎  | 37/51 [00:00<00:00, 58.38it/s]Capturing CUDA graphs (mixed prefill-decode, PIECEWISE):  86%|████████▋ | 44/51 [00:00<00:00, 59.76it/s]Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 51/51 [00:00<00:00, 56.91it/s]Capturing CUDA graphs (mixed prefill-decode, PIECEWISE): 100%|██████████| 51/51 [00:00<00:00, 56.79it/s]
+(EngineCore pid=1355471) Capturing CUDA graphs (decode, FULL):   0%|          | 0/35 [00:00<?, ?it/s]Capturing CUDA graphs (decode, FULL):  20%|██        | 7/35 [00:00<00:00, 62.77it/s]Capturing CUDA graphs (decode, FULL):  40%|████      | 14/35 [00:00<00:00, 64.99it/s]Capturing CUDA graphs (decode, FULL):  63%|██████▎   | 22/35 [00:00<00:00, 68.76it/s]Capturing CUDA graphs (decode, FULL):  86%|████████▌ | 30/35 [00:00<00:00, 71.99it/s]Capturing CUDA graphs (decode, FULL): 100%|██████████| 35/35 [00:00<00:00, 71.23it/s]
+(EngineCore pid=1355471) INFO 04-28 14:34:02 [gpu_model_runner.py:6046] Graph capturing finished in 2 secs, took 0.35 GiB
+(EngineCore pid=1355471) INFO 04-28 14:34:02 [gpu_worker.py:597] CUDA graph pool memory: 0.35 GiB (actual), 0.42 GiB (estimated), difference: 0.07 GiB (19.7%).
+(EngineCore pid=1355471) INFO 04-28 14:34:02 [core.py:283] init engine (profile, create kv cache, warmup model) took 8.49 seconds
+Rendering prompts:   0%|          | 0/500 [00:00<?, ?it/s]Rendering prompts:  14%|█▍        | 71/500 [00:00<00:00, 697.93it/s]Rendering prompts:  42%|████▏     | 208/500 [00:00<00:00, 1084.94it/s]Rendering prompts:  65%|██████▌   | 325/500 [00:00<00:00, 1115.32it/s]Rendering prompts:  88%|████████▊ | 442/500 [00:00<00:00, 1132.28it/s]Rendering prompts: 100%|██████████| 500/500 [00:00<00:00, 1102.76it/s]
+Processed prompts:   0%|          | 0/500 [00:00<?, ?it/s, est. speed input: 0.00 toks/s, output: 0.00 toks/s]Processed prompts:   0%|          | 2/500 [00:00<01:29,  5.58it/s, est. speed input: 1054.04 toks/s, output: 5.58 toks/s]Processed prompts:   1%|          | 3/500 [00:00<01:12,  6.81it/s, est. speed input: 965.56 toks/s, output: 19.57 toks/s]Processed prompts:   1%|          | 4/500 [00:00<01:14,  6.67it/s, est. speed input: 1068.38 toks/s, output: 35.77 toks/s]Processed prompts:   1%|          | 5/500 [00:00<01:19,  6.22it/s, est. speed input: 1095.21 toks/s, output: 52.75 toks/s]Processed prompts:   2%|▏         | 8/500 [00:01<00:56,  8.65it/s, est. speed input: 1899.48 toks/s, output: 121.69 toks/s]Processed prompts:   2%|▏         | 11/500 [00:01<00:39, 12.29it/s, est. speed input: 3286.33 toks/s, output: 200.71 toks/s]Processed prompts:   3%|▎         | 13/500 [00:01<00:39, 12.25it/s, est. speed input: 3005.63 toks/s, output: 237.22 toks/s]Processed prompts:   3%|▎         | 15/500 [00:01<00:36, 13.20it/s, est. speed input: 3015.33 toks/s, output: 285.35 toks/s]Processed prompts:   4%|▍         | 19/500 [00:01<00:31, 15.12it/s, est. speed input: 3780.25 toks/s, output: 376.24 toks/s]Processed prompts:   4%|▍         | 22/500 [00:01<00:26, 17.80it/s, est. speed input: 3859.53 toks/s, output: 454.97 toks/s]Processed prompts:   5%|▍         | 24/500 [00:01<00:26, 18.06it/s, est. speed input: 3780.00 toks/s, output: 498.63 toks/s]Processed prompts:   5%|▌         | 27/500 [00:02<00:25, 18.85it/s, est. speed input: 3973.33 toks/s, output: 564.82 toks/s]Processed prompts:   6%|▌         | 29/500 [00:02<00:26, 17.86it/s, est. speed input: 4434.27 toks/s, output: 588.99 toks/s]Processed prompts:   7%|▋         | 33/500 [00:02<00:23, 19.75it/s, est. speed input: 4794.36 toks/s, output: 682.59 toks/s]Processed prompts:   7%|▋         | 37/500 [00:02<00:19, 23.37it/s, est. speed input: 5014.72 toks/s, output: 772.55 toks/s]Processed prompts:   8%|▊         | 40/500 [00:02<00:19, 23.33it/s, est. speed input: 5023.71 toks/s, output: 837.02 toks/s]Processed prompts:   9%|▊         | 43/500 [00:02<00:27, 16.57it/s, est. speed input: 4685.54 toks/s, output: 853.63 toks/s]Processed prompts:  10%|▉         | 49/500 [00:03<00:19, 22.88it/s, est. speed input: 5282.86 toks/s, output: 1019.98 toks/s]Processed prompts:  11%|█▏        | 57/500 [00:03<00:13, 31.67it/s, est. speed input: 5562.11 toks/s, output: 1226.63 toks/s]Processed prompts:  12%|█▏        | 61/500 [00:03<00:14, 30.90it/s, est. speed input: 5555.26 toks/s, output: 1285.77 toks/s]Processed prompts:  13%|█▎        | 65/500 [00:03<00:17, 24.24it/s, est. speed input: 5408.95 toks/s, output: 1281.82 toks/s]Processed prompts:  14%|█▎        | 68/500 [00:03<00:18, 23.83it/s, est. speed input: 5536.54 toks/s, output: 1308.92 toks/s]Processed prompts:  14%|█▍        | 72/500 [00:03<00:18, 23.31it/s, est. speed input: 5745.63 toks/s, output: 1386.25 toks/s]Processed prompts:  15%|█▌        | 77/500 [00:04<00:15, 27.65it/s, est. speed input: 6006.86 toks/s, output: 1473.04 toks/s]Processed prompts:  16%|█▌        | 81/500 [00:04<00:18, 22.86it/s, est. speed input: 6030.10 toks/s, output: 1494.06 toks/s]Processed prompts:  17%|█▋        | 84/500 [00:04<00:19, 21.34it/s, est. speed input: 5865.86 toks/s, output: 1535.43 toks/s]Processed prompts:  17%|█▋        | 87/500 [00:04<00:21, 18.83it/s, est. speed input: 6009.40 toks/s, output: 1567.37 toks/s]Processed prompts:  18%|█▊        | 90/500 [00:04<00:26, 15.44it/s, est. speed input: 5767.69 toks/s, output: 1542.23 toks/s]Processed prompts:  19%|█▉        | 95/500 [00:05<00:21, 18.82it/s, est. speed input: 5842.96 toks/s, output: 1663.19 toks/s]Processed prompts:  20%|█▉        | 98/500 [00:05<00:20, 19.37it/s, est. speed input: 5772.08 toks/s, output: 1680.69 toks/s]Processed prompts:  20%|██        | 102/500 [00:05<00:22, 17.77it/s, est. speed input: 5799.37 toks/s, output: 1696.89 toks/s]Processed prompts:  21%|██        | 104/500 [00:05<00:24, 15.86it/s, est. speed input: 5744.69 toks/s, output: 1679.62 toks/s]Processed prompts:  21%|██        | 106/500 [00:05<00:24, 16.12it/s, est. speed input: 5634.13 toks/s, output: 1697.54 toks/s]Processed prompts:  22%|██▏       | 109/500 [00:05<00:22, 17.05it/s, est. speed input: 5527.30 toks/s, output: 1757.61 toks/s]Processed prompts:  22%|██▏       | 112/500 [00:06<00:22, 17.02it/s, est. speed input: 5502.67 toks/s, output: 1795.05 toks/s]Processed prompts:  23%|██▎       | 114/500 [00:06<00:22, 16.92it/s, est. speed input: 5453.91 toks/s, output: 1830.38 toks/s]Processed prompts:  23%|██▎       | 116/500 [00:06<00:21, 17.50it/s, est. speed input: 5448.52 toks/s, output: 1868.11 toks/s]Processed prompts:  24%|██▍       | 119/500 [00:06<00:22, 17.18it/s, est. speed input: 5336.72 toks/s, output: 1893.43 toks/s]Processed prompts:  24%|██▍       | 121/500 [00:06<00:25, 15.12it/s, est. speed input: 5291.04 toks/s, output: 1883.79 toks/s]Processed prompts:  25%|██▌       | 125/500 [00:06<00:23, 16.29it/s, est. speed input: 5420.64 toks/s, output: 1909.24 toks/s]Processed prompts:  25%|██▌       | 127/500 [00:07<00:22, 16.91it/s, est. speed input: 5347.17 toks/s, output: 1949.56 toks/s]Processed prompts:  26%|██▌       | 131/500 [00:07<00:21, 17.18it/s, est. speed input: 5203.73 toks/s, output: 1980.30 toks/s]Processed prompts:  27%|██▋       | 133/500 [00:07<00:20, 17.56it/s, est. speed input: 5133.61 toks/s, output: 2021.14 toks/s]Processed prompts:  39%|███▉      | 197/500 [00:07<00:02, 134.68it/s, est. speed input: 5735.04 toks/s, output: 4145.61 toks/s]Processed prompts:  53%|█████▎    | 265/500 [00:07<00:01, 216.84it/s, est. speed input: 6502.11 toks/s, output: 6261.49 toks/s]Processed prompts:  58%|█████▊    | 291/500 [00:07<00:00, 224.68it/s, est. speed input: 6760.28 toks/s, output: 7015.56 toks/s]Processed prompts:  63%|██████▎   | 314/500 [00:08<00:02, 77.12it/s, est. speed input: 6484.17 toks/s, output: 6629.71 toks/s] Processed prompts:  66%|██████▌   | 331/500 [00:09<00:02, 63.34it/s, est. speed input: 6629.90 toks/s, output: 6599.71 toks/s]Processed prompts:  69%|██████▉   | 344/500 [00:09<00:02, 56.51it/s, est. speed input: 6640.72 toks/s, output: 6590.86 toks/s]Processed prompts:  71%|███████   | 354/500 [00:09<00:02, 51.35it/s, est. speed input: 6605.27 toks/s, output: 6580.25 toks/s]Processed prompts:  72%|███████▏  | 362/500 [00:10<00:02, 47.55it/s, est. speed input: 6592.65 toks/s, output: 6604.21 toks/s]Processed prompts:  74%|███████▍  | 369/500 [00:10<00:02, 45.25it/s, est. speed input: 6786.01 toks/s, output: 6625.73 toks/s]Processed prompts:  75%|███████▌  | 375/500 [00:10<00:02, 42.57it/s, est. speed input: 6752.08 toks/s, output: 6646.10 toks/s]Processed prompts:  76%|███████▌  | 380/500 [00:10<00:02, 40.83it/s, est. speed input: 6698.14 toks/s, output: 6659.10 toks/s]Processed prompts:  77%|███████▋  | 385/500 [00:10<00:02, 41.63it/s, est. speed input: 6785.23 toks/s, output: 6681.33 toks/s]Processed prompts:  78%|███████▊  | 390/500 [00:10<00:02, 42.46it/s, est. speed input: 6802.34 toks/s, output: 6714.88 toks/s]Processed prompts:  79%|███████▉  | 395/500 [00:11<00:02, 35.11it/s, est. speed input: 6733.59 toks/s, output: 6687.07 toks/s]Processed prompts:  80%|████████  | 400/500 [00:11<00:02, 36.63it/s, est. speed input: 6681.87 toks/s, output: 6717.15 toks/s]Processed prompts:  81%|████████  | 405/500 [00:11<00:02, 37.05it/s, est. speed input: 6632.24 toks/s, output: 6741.47 toks/s]Processed prompts:  82%|████████▏ | 409/500 [00:11<00:02, 32.49it/s, est. speed input: 6630.70 toks/s, output: 6719.76 toks/s]Processed prompts:  83%|████████▎ | 415/500 [00:11<00:02, 36.37it/s, est. speed input: 6607.99 toks/s, output: 6767.84 toks/s]Processed prompts:  84%|████████▍ | 419/500 [00:11<00:02, 36.33it/s, est. speed input: 6563.99 toks/s, output: 6784.98 toks/s]Processed prompts:  85%|████████▍ | 424/500 [00:11<00:02, 36.96it/s, est. speed input: 6628.57 toks/s, output: 6808.95 toks/s]Processed prompts:  86%|████████▌ | 431/500 [00:11<00:01, 44.69it/s, est. speed input: 6630.79 toks/s, output: 6895.97 toks/s]Processed prompts:  87%|████████▋ | 436/500 [00:12<00:01, 43.67it/s, est. speed input: 6595.74 toks/s, output: 6931.73 toks/s]Processed prompts: 100%|██████████| 500/500 [00:12<00:00, 43.67it/s, est. speed input: 7028.69 toks/s, output: 8249.55 toks/s]Processed prompts: 100%|██████████| 500/500 [00:12<00:00, 41.18it/s, est. speed input: 7028.69 toks/s, output: 8249.55 toks/s]
+time elapsed: 12.599882364273071
+  0%|          | 0/500 [00:00<?, ?it/s]100%|██████████| 500/500 [00:00<00:00, 61873.84it/s]
+(EngineCore pid=1355471) INFO 04-28 14:34:16 [core.py:1210] Shutdown initiated (timeout=0)
+(EngineCore pid=1355471) INFO 04-28 14:34:16 [core.py:1233] Shutdown complete
+[js] ite0 — Estimating token weights...
+Found 8 available GPUs
+>>> input dir = train.jsonl
+>>> input dir = train
+all files = ['data/Ultrachat200k/fSWIFT_js_debug/ite0/train.jsonl']
+Processing file: data/Ultrachat200k/fSWIFT_js_debug/ite0/train.jsonl
+**** Filtering ****
+>>>> After Filtering, you have 498 sample not null
+Using 8 GPUs for parallel processing (available: 8)
+Split data into 8 shards
+Using parallel processing with multiprocessing Pool
+The tokenizer you are loading from 'model_hub/Qwen1.5-1.8B/sft_v2' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+`torch_dtype` is deprecated! Use `dtype` instead!
+The tokenizer you are loading from 'model_hub/Qwen1.5-1.8B/sft_v2' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+The tokenizer you are loading from 'model_hub/Qwen1.5-1.8B/sft_v2' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+The tokenizer you are loading from 'model_hub/Qwen1.5-1.8B/sft_v2' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+`torch_dtype` is deprecated! Use `dtype` instead!
+`torch_dtype` is deprecated! Use `dtype` instead!
+`torch_dtype` is deprecated! Use `dtype` instead!
+The tokenizer you are loading from 'model_hub/Qwen1.5-1.8B/sft_v2' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+`torch_dtype` is deprecated! Use `dtype` instead!
+The tokenizer you are loading from 'model_hub/Qwen1.5-1.8B/sft_v2' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+The tokenizer you are loading from 'model_hub/Qwen1.5-1.8B/sft_v2' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+`torch_dtype` is deprecated! Use `dtype` instead!
+`torch_dtype` is deprecated! Use `dtype` instead!
+The tokenizer you are loading from 'model_hub/Qwen1.5-1.8B/sft_v2' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+`torch_dtype` is deprecated! Use `dtype` instead!
+Process using device: cuda:2
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Process using device: cuda:0
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Process using device: cuda:1
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Process using device: cuda:4
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Process using device: cuda:5
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Process using device: cuda:3
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Process using device: cuda:6
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Process using device: cuda:7
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:10<00:21, 10.77s/it]Loading checkpoint shards:  33%|███▎      | 1/3 [00:10<00:21, 10.52s/it]Loading checkpoint shards:  33%|███▎      | 1/3 [00:10<00:20, 10.26s/it]Loading checkpoint shards:  33%|███▎      | 1/3 [00:10<00:20, 10.18s/it]Loading checkpoint shards:  33%|███▎      | 1/3 [00:10<00:20, 10.27s/it]Loading checkpoint shards:  33%|███▎      | 1/3 [00:10<00:20, 10.34s/it]Loading checkpoint shards:  33%|███▎      | 1/3 [00:10<00:20, 10.26s/it]Loading checkpoint shards:  33%|███▎      | 1/3 [00:10<00:21, 10.64s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:20<00:10, 10.21s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:20<00:10, 10.24s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:20<00:10, 10.42s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:20<00:10, 10.33s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:20<00:10, 10.23s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:20<00:10, 10.33s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:20<00:10, 10.20s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:20<00:10, 10.28s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:30<00:00, 10.11s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:30<00:00, 10.15s/it]
+Loading checkpoint shards: 100%|██████████| 3/3 [00:30<00:00, 10.07s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:30<00:00, 10.10s/it]
+Loading checkpoint shards: 100%|██████████| 3/3 [00:30<00:00, 10.09s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:30<00:00, 10.13s/it]
+Loading checkpoint shards: 100%|██████████| 3/3 [00:30<00:00, 10.09s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:30<00:00, 10.13s/it]
+Loading checkpoint shards: 100%|██████████| 3/3 [00:30<00:00, 10.21s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:30<00:00, 10.30s/it]
+Loading checkpoint shards: 100%|██████████| 3/3 [00:30<00:00, 10.15s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:30<00:00, 10.22s/it]
+Loading checkpoint shards: 100%|██████████| 3/3 [00:30<00:00, 10.14s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:30<00:00, 10.22s/it]
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 3/3 [00:30<00:00, 10.23s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:30<00:00, 10.25s/it]
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:03<00:03,  3.03s/it]Loading checkpoint shards:  50%|█████     | 1/2 [00:03<00:03,  3.02s/it]Loading checkpoint shards:  50%|█████     | 1/2 [00:03<00:03,  3.03s/it]Loading checkpoint shards:  50%|█████     | 1/2 [00:03<00:03,  3.03s/it]Loading checkpoint shards:  50%|█████     | 1/2 [00:03<00:03,  3.02s/it]Loading checkpoint shards:  50%|█████     | 1/2 [00:03<00:03,  3.03s/it]Loading checkpoint shards:  50%|█████     | 1/2 [00:03<00:03,  3.03s/it]Loading checkpoint shards:  50%|█████     | 1/2 [00:03<00:03,  3.49s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:04<00:00,  2.08s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:04<00:00,  2.22s/it]
+Loading checkpoint shards: 100%|██████████| 2/2 [00:04<00:00,  2.08s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:04<00:00,  2.22s/it]
+Loading checkpoint shards: 100%|██████████| 2/2 [00:04<00:00,  2.08s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:04<00:00,  2.22s/it]
+Loading checkpoint shards: 100%|██████████| 2/2 [00:04<00:00,  2.08s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:04<00:00,  2.22s/it]
+Loading checkpoint shards: 100%|██████████| 2/2 [00:04<00:00,  2.08s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:04<00:00,  2.22s/it]
+Loading checkpoint shards: 100%|██████████| 2/2 [00:04<00:00,  2.08s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:04<00:00,  2.23s/it]
+GPU 4: Processing 63 examples
+GPU-4:   0%|                                             | 0/16 [00:00<?, ?it/s]GPU 3: Processing 63 examples
+GPU-3:   0%|                                             | 0/16 [00:00<?, ?it/s]GPU 0: Processing 63 examples
+GPU-0:   0%|                                             | 0/16 [00:00<?, ?it/s]GPU 2: Processing 63 examples
+GPU-2:   0%|                                             | 0/16 [00:00<?, ?it/s]GPU 1: Processing 63 examples
+GPU-1:   0%|                                             | 0/16 [00:00<?, ?it/s]GPU 7: Processing 57 examples
+GPU-7:   0%|                                             | 0/15 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:04<00:00,  2.18s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:04<00:00,  2.31s/it]
+GPU 6: Processing 63 examples
+GPU-6:   0%|                                             | 0/16 [00:00<?, ?it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:04<00:00,  2.15s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:04<00:00,  2.35s/it]
+GPU 5: Processing 63 examples
+GPU-5:   0%|                                             | 0/16 [00:00<?, ?it/s]GPU-4:   6%|██▎                                  | 1/16 [00:02<00:30,  2.04s/it]GPU-0:   6%|██▎                                  | 1/16 [00:02<00:32,  2.15s/it]GPU-3:   6%|██▎                                  | 1/16 [00:02<00:36,  2.43s/it]GPU-1:   6%|██▎                                  | 1/16 [00:02<00:37,  2.50s/it]GPU-2:   6%|██▎                                  | 1/16 [00:02<00:37,  2.52s/it]GPU-7:   7%|██▍                                  | 1/15 [00:02<00:36,  2.61s/it]GPU-6:   6%|██▎                                  | 1/16 [00:02<00:38,  2.54s/it]GPU-5:   6%|██▎                                  | 1/16 [00:02<00:37,  2.47s/it]GPU-4:  19%|██████▉                              | 3/16 [00:03<00:13,  1.01s/it]GPU-3:  19%|██████▉                              | 3/16 [00:03<00:14,  1.08s/it]GPU-0:  19%|██████▉                              | 3/16 [00:03<00:14,  1.14s/it]GPU-1:  19%|██████▉                              | 3/16 [00:03<00:14,  1.13s/it]GPU-7:  20%|███████▍                             | 3/15 [00:03<00:14,  1.17s/it]GPU-2:  19%|██████▉                              | 3/16 [00:04<00:15,  1.23s/it]GPU-6:  19%|██████▉                              | 3/16 [00:03<00:15,  1.17s/it]GPU-5:  19%|██████▉                              | 3/16 [00:03<00:14,  1.14s/it]GPU-4:  31%|███████████▌                         | 5/16 [00:04<00:09,  1.14it/s]GPU-1:  31%|███████████▌                         | 5/16 [00:04<00:08,  1.22it/s]GPU-7:  33%|████████████▎                        | 5/15 [00:04<00:08,  1.20it/s]GPU-3:  31%|███████████▌                         | 5/16 [00:05<00:09,  1.13it/s]GPU-0:  31%|███████████▌                         | 5/16 [00:05<00:09,  1.12it/s]GPU-6:  31%|███████████▌                         | 5/16 [00:05<00:09,  1.12it/s]GPU-2:  31%|███████████▌                         | 5/16 [00:05<00:10,  1.04it/s]GPU-5:  31%|███████████▌                         | 5/16 [00:05<00:10,  1.09it/s]GPU-1:  44%|████████████████▏                    | 7/16 [00:06<00:06,  1.33it/s]GPU-4:  44%|████████████████▏                    | 7/16 [00:06<00:07,  1.25it/s]GPU-0:  44%|████████████████▏                    | 7/16 [00:06<00:07,  1.28it/s]GPU-3:  44%|████████████████▏                    | 7/16 [00:06<00:07,  1.28it/s]GPU-7:  47%|█████████████████▎                   | 7/15 [00:06<00:06,  1.23it/s]GPU-6:  44%|████████████████▏                    | 7/16 [00:06<00:07,  1.26it/s]GPU-2:  44%|████████████████▏                    | 7/16 [00:06<00:07,  1.16it/s]GPU-5:  44%|████████████████▏                    | 7/16 [00:06<00:07,  1.22it/s]GPU-1:  56%|████████████████████▊                | 9/16 [00:07<00:04,  1.46it/s]GPU-0:  56%|████████████████████▊                | 9/16 [00:07<00:04,  1.41it/s]GPU-4:  56%|████████████████████▊                | 9/16 [00:07<00:05,  1.35it/s]GPU-3:  56%|████████████████████▊                | 9/16 [00:07<00:05,  1.37it/s]GPU-7:  60%|██████████████████████▏              | 9/15 [00:07<00:04,  1.29it/s]GPU-6:  56%|████████████████████▊                | 9/16 [00:07<00:05,  1.32it/s]GPU-2:  56%|████████████████████▊                | 9/16 [00:08<00:05,  1.21it/s]GPU-5:  56%|████████████████████▊                | 9/16 [00:07<00:05,  1.31it/s]GPU-0:  69%|████████████████████████▊           | 11/16 [00:08<00:03,  1.53it/s]GPU-1:  69%|████████████████████████▊           | 11/16 [00:08<00:03,  1.41it/s]GPU-4:  69%|████████████████████████▊           | 11/16 [00:08<00:03,  1.38it/s]GPU-3:  69%|████████████████████████▊           | 11/16 [00:08<00:03,  1.41it/s]GPU-7:  73%|██████████████████████████▍         | 11/15 [00:09<00:02,  1.37it/s]GPU-6:  69%|████████████████████████▊           | 11/16 [00:09<00:03,  1.36it/s]GPU-5:  69%|████████████████████████▊           | 11/16 [00:09<00:03,  1.37it/s]GPU-2:  69%|████████████████████████▊           | 11/16 [00:09<00:03,  1.27it/s]GPU-0:  81%|█████████████████████████████▎      | 13/16 [00:10<00:02,  1.46it/s]GPU-1:  81%|█████████████████████████████▎      | 13/16 [00:10<00:02,  1.45it/s]GPU-4:  81%|█████████████████████████████▎      | 13/16 [00:10<00:02,  1.40it/s]GPU-3:  81%|█████████████████████████████▎      | 13/16 [00:10<00:02,  1.40it/s]GPU-6:  81%|█████████████████████████████▎      | 13/16 [00:10<00:02,  1.41it/s]GPU-7:  87%|███████████████████████████████▏    | 13/15 [00:10<00:01,  1.36it/s]GPU-5:  81%|█████████████████████████████▎      | 13/16 [00:10<00:02,  1.44it/s]GPU-0:  94%|█████████████████████████████████▊  | 15/16 [00:11<00:00,  1.49it/s]GPU-2:  81%|█████████████████████████████▎      | 13/16 [00:11<00:02,  1.28it/s]GPU-1:  94%|█████████████████████████████████▊  | 15/16 [00:11<00:00,  1.44it/s]GPU-3:  94%|█████████████████████████████████▊  | 15/16 [00:11<00:00,  1.42it/s]GPU-4: 100%|████████████████████████████████████| 16/16 [00:11<00:00,  1.60it/s]GPU-4: 100%|████████████████████████████████████| 16/16 [00:11<00:00,  1.36it/s]
+GPU-4:   0%|                                             | 0/16 [00:00<?, ?it/s]GPU-7: 100%|████████████████████████████████████| 15/15 [00:11<00:00,  1.50it/s]GPU-7: 100%|████████████████████████████████████| 15/15 [00:11<00:00,  1.27it/s]
+GPU-7:   0%|                                             | 0/15 [00:00<?, ?it/s]GPU-0: 100%|████████████████████████████████████| 16/16 [00:11<00:00,  1.34it/s]
+GPU-0:   0%|                                             | 0/16 [00:00<?, ?it/s]GPU-1: 100%|████████████████████████████████████| 16/16 [00:12<00:00,  1.33it/s]
+GPU-1:   0%|                                             | 0/16 [00:00<?, ?it/s]GPU-6:  94%|█████████████████████████████████▊  | 15/16 [00:11<00:00,  1.44it/s]GPU-3: 100%|████████████████████████████████████| 16/16 [00:12<00:00,  1.31it/s]
+GPU-3:   0%|                                             | 0/16 [00:00<?, ?it/s]GPU-5:  94%|█████████████████████████████████▊  | 15/16 [00:11<00:00,  1.51it/s]GPU-2:  94%|█████████████████████████████████▊  | 15/16 [00:12<00:00,  1.43it/s]GPU-6: 100%|████████████████████████████████████| 16/16 [00:12<00:00,  1.28it/s]
+GPU-6:   0%|                                             | 0/16 [00:00<?, ?it/s]GPU-5: 100%|████████████████████████████████████| 16/16 [00:12<00:00,  1.31it/s]
+GPU-5:   0%|                                             | 0/16 [00:00<?, ?it/s]GPU-0:   6%|██▎                                  | 1/16 [00:01<00:15,  1.06s/it]GPU-2: 100%|████████████████████████████████████| 16/16 [00:13<00:00,  1.23it/s]
+GPU-2:   0%|                                             | 0/16 [00:00<?, ?it/s]GPU-4:  12%|████▋                                | 2/16 [00:01<00:11,  1.23it/s]GPU-3:   6%|██▎                                  | 1/16 [00:01<00:18,  1.23s/it]GPU-1:  12%|████▋                                | 2/16 [00:01<00:12,  1.14it/s]GPU-7:  13%|████▉                                | 2/15 [00:02<00:14,  1.11s/it]GPU-5:  12%|████▋                                | 2/16 [00:01<00:09,  1.47it/s]GPU-0:  12%|████▋                                | 2/16 [00:02<00:19,  1.36s/it]GPU-2:  12%|████▋                                | 2/16 [00:01<00:11,  1.25it/s]GPU-6:   6%|██▎                                  | 1/16 [00:01<00:28,  1.91s/it]GPU-7:  20%|███████▍                             | 3/15 [00:03<00:13,  1.09s/it]GPU-3:  19%|██████▉                              | 3/16 [00:03<00:15,  1.21s/it]GPU-1:  25%|█████████▎                           | 4/16 [00:04<00:12,  1.02s/it]GPU-5:  25%|█████████▎                           | 4/16 [00:03<00:09,  1.21it/s]GPU-6:  19%|██████▉                              | 3/16 [00:03<00:13,  1.05s/it]GPU-0:  25%|█████████▎                           | 4/16 [00:04<00:13,  1.09s/it]GPU-4:  25%|█████████▎                           | 4/16 [00:04<00:14,  1.22s/it]GPU-7:  33%|████████████▎                        | 5/15 [00:04<00:09,  1.09it/s]GPU-3:  25%|█████████▎                           | 4/16 [00:05<00:16,  1.42s/it]GPU-4:  31%|███████████▌                         | 5/16 [00:06<00:14,  1.28s/it]GPU-2:  25%|█████████▎                           | 4/16 [00:04<00:15,  1.30s/it]GPU-0:  38%|█████████████▉                       | 6/16 [00:06<00:09,  1.06it/s]GPU-1:  38%|█████████████▉                       | 6/16 [00:06<00:10,  1.02s/it]GPU-6:  31%|███████████▌                         | 5/16 [00:05<00:11,  1.07s/it]GPU-5:  38%|█████████████▉                       | 6/16 [00:05<00:10,  1.02s/it]GPU-3:  38%|█████████████▉                       | 6/16 [00:07<00:11,  1.14s/it]GPU-7:  47%|█████████████████▎                   | 7/15 [00:07<00:09,  1.14s/it]GPU-2:  38%|█████████████▉                       | 6/16 [00:06<00:11,  1.15s/it]GPU-1:  50%|██████████████████▌                  | 8/16 [00:07<00:07,  1.01it/s]GPU-0:  50%|██████████████████▌                  | 8/16 [00:08<00:07,  1.03it/s]GPU-4:  44%|████████████████▏                    | 7/16 [00:08<00:10,  1.18s/it]GPU-5:  50%|██████████████████▌                  | 8/16 [00:07<00:07,  1.11it/s]GPU-6:  44%|████████████████▏                    | 7/16 [00:07<00:09,  1.05s/it]GPU-7:  53%|███████████████████▋                 | 8/15 [00:08<00:07,  1.11s/it]GPU-3:  44%|████████████████▏                    | 7/16 [00:08<00:10,  1.17s/it]GPU-2:  44%|████████████████▏                    | 7/16 [00:08<00:10,  1.16s/it]GPU-1:  62%|██████████████████████▌             | 10/16 [00:09<00:05,  1.18it/s]GPU-6:  50%|██████████████████▌                  | 8/16 [00:08<00:08,  1.04s/it]GPU-0:  62%|██████████████████████▌             | 10/16 [00:09<00:05,  1.09it/s]GPU-5:  62%|██████████████████████▌             | 10/16 [00:08<00:05,  1.11it/s]GPU-4:  56%|████████████████████▊                | 9/16 [00:10<00:07,  1.11s/it]GPU-2:  50%|██████████████████▌                  | 8/16 [00:09<00:09,  1.17s/it]GPU-3:  56%|████████████████████▊                | 9/16 [00:10<00:07,  1.07s/it]GPU-7:  60%|██████████████████████▏              | 9/15 [00:10<00:08,  1.35s/it]GPU-1:  75%|███████████████████████████         | 12/16 [00:10<00:03,  1.18it/s]GPU-6:  62%|██████████████████████▌             | 10/16 [00:10<00:05,  1.05it/s]GPU-5:  75%|███████████████████████████         | 12/16 [00:10<00:03,  1.22it/s]GPU-2:  56%|████████████████████▊                | 9/16 [00:10<00:07,  1.13s/it]GPU-4:  69%|████████████████████████▊           | 11/16 [00:11<00:04,  1.02it/s]GPU-0:  75%|███████████████████████████         | 12/16 [00:11<00:03,  1.03it/s]GPU-7:  73%|██████████████████████████▍         | 11/15 [00:12<00:04,  1.15s/it]GPU-1:  88%|███████████████████████████████▌    | 14/16 [00:12<00:01,  1.13it/s]GPU-3:  69%|████████████████████████▊           | 11/16 [00:12<00:05,  1.11s/it]GPU-2:  62%|██████████████████████▌             | 10/16 [00:11<00:07,  1.26s/it]GPU-5:  88%|███████████████████████████████▌    | 14/16 [00:12<00:01,  1.14it/s]GPU-4:  81%|█████████████████████████████▎      | 13/16 [00:13<00:02,  1.07it/s]GPU-6:  75%|███████████████████████████         | 12/16 [00:12<00:04,  1.01s/it]GPU-0:  88%|███████████████████████████████▌    | 14/16 [00:14<00:02,  1.01s/it]GPU-7:  87%|███████████████████████████████▏    | 13/15 [00:14<00:02,  1.04s/it]GPU-4:  94%|█████████████████████████████████▊  | 15/16 [00:14<00:00,  1.16it/s]GPU-2:  69%|████████████████████████▊           | 11/16 [00:13<00:07,  1.42s/it]GPU-1: 100%|████████████████████████████████████| 16/16 [00:14<00:00,  1.08it/s]GPU-1: 100%|████████████████████████████████████| 16/16 [00:14<00:00,  1.08it/s]
+GPU-3:  81%|█████████████████████████████▎      | 13/16 [00:14<00:03,  1.07s/it]GPU-5: 100%|████████████████████████████████████| 16/16 [00:14<00:00,  1.10it/s]GPU-5: 100%|████████████████████████████████████| 16/16 [00:14<00:00,  1.12it/s]
+GPU-7: 100%|████████████████████████████████████| 15/15 [00:15<00:00,  1.15it/s]GPU-7: 100%|████████████████████████████████████| 15/15 [00:15<00:00,  1.02s/it]
+GPU-4: 100%|████████████████████████████████████| 16/16 [00:15<00:00,  1.04it/s]
+GPU-0: 100%|████████████████████████████████████| 16/16 [00:15<00:00,  1.11it/s]GPU-0: 100%|████████████████████████████████████| 16/16 [00:15<00:00,  1.04it/s]
+GPU-6:  88%|███████████████████████████████▌    | 14/16 [00:14<00:02,  1.04s/it]GPU-2:  75%|███████████████████████████         | 12/16 [00:14<00:05,  1.32s/it]GPU-3:  94%|█████████████████████████████████▊  | 15/16 [00:16<00:00,  1.02it/s]GPU-6: 100%|████████████████████████████████████| 16/16 [00:15<00:00,  1.11it/s]GPU-6: 100%|████████████████████████████████████| 16/16 [00:15<00:00,  1.01it/s]
+GPU-2:  88%|███████████████████████████████▌    | 14/16 [00:15<00:01,  1.04it/s]GPU-3: 100%|████████████████████████████████████| 16/16 [00:16<00:00,  1.04s/it]
+GPU-2: 100%|████████████████████████████████████| 16/16 [00:16<00:00,  1.02s/it]
+keys = dict_keys(['prompt', 'chosen', 'rejected', 'rejected_weight', 'chosen_weight'])
+keys = dict_keys(['prompt', 'chosen', 'rejected', 'rejected_weight', 'chosen_weight'])
+keys = dict_keys(['prompt', 'chosen', 'rejected', 'rejected_weight', 'chosen_weight'])
+keys = dict_keys(['prompt', 'chosen', 'rejected', 'rejected_weight', 'chosen_weight'])
+keys = dict_keys(['prompt', 'chosen', 'rejected', 'rejected_weight', 'chosen_weight'])
+keys = dict_keys(['prompt', 'chosen', 'rejected', 'rejected_weight', 'chosen_weight'])
+keys = dict_keys(['prompt', 'chosen', 'rejected', 'rejected_weight', 'chosen_weight'])
+keys = dict_keys(['prompt', 'chosen', 'rejected', 'rejected_weight', 'chosen_weight'])
+Saved processed data to data/Ultrachat200k/fSWIFT_js_debug/ite0/train.jsonl
+Finished processing all files in 91.91 seconds
+Processed files:
+  data/Ultrachat200k/fSWIFT_js_debug/ite0/train.jsonl
+***** Preprocess ... *****
+Done with 498 sample in data/Ultrachat200k/fSWIFT_js_debug/ite0/train.jsonl while before is 498
+[js] ite0 — Training on 500 examples...
+>>> batch size = 8
+Using transform configuration from config file
+no FSDP port specified; using open port for FSDP: 55171
+>>> Transform method: binary
+Transform parameters: {'top_percent': 100}
+seed: 0
+iteration: 0
+batch_size: 8
+eval_batch_size: 16
+debug: false
+fsdp_port: 55171
+datasets:
+- Ultrachat200k/fSWIFT_js_debug/ite0
+base_data_dir: data
+reverse_dataset: false
+wandb:
+  enabled: true
+  entity: null
+  project: SWIFT
+output_dir: output
+ckpt_dir: model_hub/Qwen1.5-1.8B/fSWIFT_js_debug/ite0/
+sample_during_eval: false
+n_eval_model_samples: 16
+do_first_eval: true
+local_run_dir: output/fswift_sft_v2_Ultrachat200k/fSWIFT_js_debug/ite0_04-29_02-36
+exp_name: fswift_sft_v2_Ultrachat200k/fSWIFT_js_debug/ite0
+lr: 5.0e-07
+gradient_accumulation_steps: 2
+max_grad_norm: 10.0
+max_length: 1024
+max_prompt_length: 512
+n_epochs: 1
+n_examples: 500
+examples_per_epoch: null
+n_eval_examples: 256
+trainer: FSDPTrainer
+optimizer: RMSprop
+warmup_steps: 150
+activation_checkpointing: true
+eval_every: 100000
+minimum_log_interval_secs: 10.0
+model:
+  name_or_path: model_hub/Qwen1.5-1.8B/sft_v2
+  tokenizer_name_or_path: null
+  archive: null
+  block_name: Qwen2DecoderLayer
+  policy_dtype: bfloat16
+  fsdp_policy_mp: null
+  reference_dtype: bfloat16
+loss:
+  name: fswift
+  beta: 0.1
+  label_smoothing: 0
+  reference_free: false
+  token_level: true
+  f_divergence: js
+transform:
+  method: binary
+  binary:
+    top_percent: 100
+  threshold:
+    upper_threshold: 1.0
+    lower_threshold: -1.0
+  threshold_and_scale:
+    min_val: -1.5
+    max_val: 1.5
+    min_scale: 0.7
+    max_scale: 1.3
+  random:
+    min_val: 0.7
+    max_val: 1.3
+  rank_based:
+    min_scale: 0.7
+    max_scale: 1.3
+
+================================================================================
+Writing to lair-g6:output/fswift_sft_v2_Ultrachat200k/fSWIFT_js_debug/ite0_04-29_02-36
+================================================================================
+building policy
+`torch_dtype` is deprecated! Use `dtype` instead!
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:01<00:01,  1.15s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:01<00:00,  1.25it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:01<00:00,  1.18it/s]
+The tokenizer you are loading from 'model_hub/Qwen1.5-1.8B/sft_v2' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+Gradient checkpointing enabled for policy
+building reference model
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:01<00:01,  1.12s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:01<00:00,  1.28it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:01<00:00,  1.20it/s]
+starting 8 processes for FSDP training
+setting RLIMIT_NOFILE soft limit to 131072 from 131072
+The tokenizer you are loading from 'model_hub/Qwen1.5-1.8B/sft_v2' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+The tokenizer you are loading from 'model_hub/Qwen1.5-1.8B/sft_v2' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+The tokenizer you are loading from 'model_hub/Qwen1.5-1.8B/sft_v2' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+The tokenizer you are loading from 'model_hub/Qwen1.5-1.8B/sft_v2' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+The tokenizer you are loading from 'model_hub/Qwen1.5-1.8B/sft_v2' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+The tokenizer you are loading from 'model_hub/Qwen1.5-1.8B/sft_v2' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+wandb: [wandb.login()] Loaded credentials for https://api.wandb.ai from /u/tucnguye/.netrc.
+The tokenizer you are loading from 'model_hub/Qwen1.5-1.8B/sft_v2' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+wandb: Currently logged in as: tucnguyenvan to https://api.wandb.ai. Use `wandb login --relogin` to force relogin
+wandb: setting up run klms0omg
+wandb: Tracking run with wandb version 0.26.0
+wandb: Run data is saved locally in output/wandb/run-20260428_143701-klms0omg
+wandb: Run `wandb offline` to turn off syncing.
+wandb: Syncing run fswift_sft_v2_Ultrachat200k/fSWIFT_js_debug/ite0
+wandb: ⭐️ View project at https://wandb.ai/tucnguyenvan/SWIFT
+wandb: 🚀 View run at https://wandb.ai/tucnguyenvan/SWIFT/runs/klms0omg
+The tokenizer you are loading from 'model_hub/Qwen1.5-1.8B/sft_v2' with an incorrect regex pattern: https://huggingface.co/mistralai/Mistral-Small-3.1-24B-Instruct-2503/discussions/84#69121093e8b480e709447d5e. This will lead to incorrect tokenization. You should set the `fix_mistral_regex=True` flag when loading this tokenizer to fix this issue.
+/data/project/le-lab/conda_env/WSPIN_v2/lib/python3.10/site-packages/torch/distributed/c10d_logger.py:83: UserWarning: barrier(): using the device under current context. You can specify `device_id` in `init_process_group` to mute this warning.
+  return func(*args, **kwargs)
+[rank0]:[W428 14:37:04.940196859 ProcessGroupNCCL.cpp:5138] Guessing device ID based on global rank. This can cause a hang if rank to GPU mapping is heterogeneous. You can specify device_id in init_process_group()
+0 initializing distributed
+Creating trainer on process 0 with world size 8
+Loading tokenizer model_hub/Qwen1.5-1.8B/sft_v2
+{'method': 'binary', 'binary': {'top_percent': 100}, 'threshold': {'upper_threshold': 1.0, 'lower_threshold': -1.0}, 'threshold_and_scale': {'min_val': -1.5, 'max_val': 1.5, 'min_scale': 0.7, 'max_scale': 1.3}, 'random': {'min_val': 0.7, 'max_val': 1.3}, 'rank_based': {'min_scale': 0.7, 'max_scale': 1.3}}
+Loaded train data iterator
+Sharding policy...
+Attempting to enable activation checkpointing...
+Applying activation checkpointing wrapper to policy...
+FSDP activation checkpointing enabled!
+Sharding reference model...
+Loaded model on rank 0
+Using RMSprop optimizer
+Loading Ultrachat200k/fSWIFT_js_debug/ite0 dataset (train split) from data/Ultrachat200k/fSWIFT_js_debug/ite0/train.jsonl...
+Processing Ultrachat200k/fSWIFT_js_debug/ite0: 0it [00:00, ?it/s]Processing Ultrachat200k/fSWIFT_js_debug/ite0: 135it [00:00, 1324.02it/s]Processing Ultrachat200k/fSWIFT_js_debug/ite0: 268it [00:00, 1298.20it/s]Processing Ultrachat200k/fSWIFT_js_debug/ite0: 407it [00:00, 1292.35it/s]Processing Ultrachat200k/fSWIFT_js_debug/ite0: 498it [00:00, 1264.35it/s]
+2 initializing distributed
+Creating trainer on process 2 with world size 8
+{'method': 'binary', 'binary': {'top_percent': 100}, 'threshold': {'upper_threshold': 1.0, 'lower_threshold': -1.0}, 'threshold_and_scale': {'min_val': -1.5, 'max_val': 1.5, 'min_scale': 0.7, 'max_scale': 1.3}, 'random': {'min_val': 0.7, 'max_val': 1.3}, 'rank_based': {'min_scale': 0.7, 'max_scale': 1.3}}
+Loaded model on rank 2
+Loading Ultrachat200k/fSWIFT_js_debug/ite0 dataset (train split) from data/Ultrachat200k/fSWIFT_js_debug/ite0/train.jsonl...
+5 initializing distributed
+Creating trainer on process 5 with world size 8
+{'method': 'binary', 'binary': {'top_percent': 100}, 'threshold': {'upper_threshold': 1.0, 'lower_threshold': -1.0}, 'threshold_and_scale': {'min_val': -1.5, 'max_val': 1.5, 'min_scale': 0.7, 'max_scale': 1.3}, 'random': {'min_val': 0.7, 'max_val': 1.3}, 'rank_based': {'min_scale': 0.7, 'max_scale': 1.3}}
+Loaded model on rank 5
+Loading Ultrachat200k/fSWIFT_js_debug/ite0 dataset (train split) from data/Ultrachat200k/fSWIFT_js_debug/ite0/train.jsonl...
+6 initializing distributed
+Creating trainer on process 6 with world size 8
+{'method': 'binary', 'binary': {'top_percent': 100}, 'threshold': {'upper_threshold': 1.0, 'lower_threshold': -1.0}, 'threshold_and_scale': {'min_val': -1.5, 'max_val': 1.5, 'min_scale': 0.7, 'max_scale': 1.3}, 'random': {'min_val': 0.7, 'max_val': 1.3}, 'rank_based': {'min_scale': 0.7, 'max_scale': 1.3}}
+Loaded model on rank 6
+Loading Ultrachat200k/fSWIFT_js_debug/ite0 dataset (train split) from data/Ultrachat200k/fSWIFT_js_debug/ite0/train.jsonl...
+3 initializing distributed
+Creating trainer on process 3 with world size 8
+{'method': 'binary', 'binary': {'top_percent': 100}, 'threshold': {'upper_threshold': 1.0, 'lower_threshold': -1.0}, 'threshold_and_scale': {'min_val': -1.5, 'max_val': 1.5, 'min_scale': 0.7, 'max_scale': 1.3}, 'random': {'min_val': 0.7, 'max_val': 1.3}, 'rank_based': {'min_scale': 0.7, 'max_scale': 1.3}}
+Loaded model on rank 3
+Loading Ultrachat200k/fSWIFT_js_debug/ite0 dataset (train split) from data/Ultrachat200k/fSWIFT_js_debug/ite0/train.jsonl...
+4 initializing distributed
+Creating trainer on process 4 with world size 8
+{'method': 'binary', 'binary': {'top_percent': 100}, 'threshold': {'upper_threshold': 1.0, 'lower_threshold': -1.0}, 'threshold_and_scale': {'min_val': -1.5, 'max_val': 1.5, 'min_scale': 0.7, 'max_scale': 1.3}, 'random': {'min_val': 0.7, 'max_val': 1.3}, 'rank_based': {'min_scale': 0.7, 'max_scale': 1.3}}
+Loaded model on rank 4
+Loading Ultrachat200k/fSWIFT_js_debug/ite0 dataset (train split) from data/Ultrachat200k/fSWIFT_js_debug/ite0/train.jsonl...
+1 initializing distributed
+Creating trainer on process 1 with world size 8
+{'method': 'binary', 'binary': {'top_percent': 100}, 'threshold': {'upper_threshold': 1.0, 'lower_threshold': -1.0}, 'threshold_and_scale': {'min_val': -1.5, 'max_val': 1.5, 'min_scale': 0.7, 'max_scale': 1.3}, 'random': {'min_val': 0.7, 'max_val': 1.3}, 'rank_based': {'min_scale': 0.7, 'max_scale': 1.3}}
+Loaded model on rank 1
+Loading Ultrachat200k/fSWIFT_js_debug/ite0 dataset (train split) from data/Ultrachat200k/fSWIFT_js_debug/ite0/train.jsonl...
+7 initializing distributed
+Creating trainer on process 7 with world size 8
+{'method': 'binary', 'binary': {'top_percent': 100}, 'threshold': {'upper_threshold': 1.0, 'lower_threshold': -1.0}, 'threshold_and_scale': {'min_val': -1.5, 'max_val': 1.5, 'min_scale': 0.7, 'max_scale': 1.3}, 'random': {'min_val': 0.7, 'max_val': 1.3}, 'rank_based': {'min_scale': 0.7, 'max_scale': 1.3}}
+Loaded model on rank 7
+Loading Ultrachat200k/fSWIFT_js_debug/ite0 dataset (train split) from data/Ultrachat200k/fSWIFT_js_debug/ite0/train.jsonl...
+[1;34mwandb[0m: 
+[1;34mwandb[0m: 🚀 View run [33mfswift_sft_v2_Ultrachat200k/fSWIFT_js_debug/ite0[0m at: [34mhttps://wandb.ai/tucnguyenvan/SWIFT/runs/klms0omg[0m
+[rank0]:[W428 14:37:11.701428474 ProcessGroupNCCL.cpp:1553] Warning: WARNING: destroy_process_group() was not called before program exit, which can leak resources. For more info, please see https://pytorch.org/docs/stable/distributed.html#shutdown (function operator())
+W0428 14:37:13.015000 1356534 site-packages/torch/multiprocessing/spawn.py:165] Terminating process 1356605 via signal SIGTERM
+W0428 14:37:13.016000 1356534 site-packages/torch/multiprocessing/spawn.py:165] Terminating process 1356627 via signal SIGTERM
+W0428 14:37:13.016000 1356534 site-packages/torch/multiprocessing/spawn.py:165] Terminating process 1356649 via signal SIGTERM
+W0428 14:37:13.017000 1356534 site-packages/torch/multiprocessing/spawn.py:165] Terminating process 1356723 via signal SIGTERM
+W0428 14:37:13.017000 1356534 site-packages/torch/multiprocessing/spawn.py:165] Terminating process 1356754 via signal SIGTERM
+W0428 14:37:13.017000 1356534 site-packages/torch/multiprocessing/spawn.py:165] Terminating process 1356779 via signal SIGTERM
+Error executing job with overrides: ['model=qwen', 'model.name_or_path=model_hub/Qwen1.5-1.8B/sft_v2', 'loss=fswift', 'loss.f_divergence=js', 'trainer=FSDPTrainer', 'base_data_dir=data', 'ckpt_dir=model_hub/Qwen1.5-1.8B/fSWIFT_js_debug/ite0/', 'datasets=["Ultrachat200k/fSWIFT_js_debug/ite0"]', 'batch_size=8', 'gradient_accumulation_steps=2', 'activation_checkpointing=true', 'n_epochs=1', 'n_examples=500', 'lr=5e-7', 'iteration=0']
+Traceback (most recent call last):
+  File "/data/project/le-lab/fSWIFT/train.py", line 147, in main
+    mp.spawn(worker_main, nprocs=world_size, args=(world_size, config, policy_tokenizer, policy, reference_model), join=True)
+  File "/data/project/le-lab/conda_env/WSPIN_v2/lib/python3.10/site-packages/torch/multiprocessing/spawn.py", line 340, in spawn
+    return start_processes(fn, args, nprocs, join, daemon, start_method="spawn")
+  File "/data/project/le-lab/conda_env/WSPIN_v2/lib/python3.10/site-packages/torch/multiprocessing/spawn.py", line 296, in start_processes
+    while not context.join():
+  File "/data/project/le-lab/conda_env/WSPIN_v2/lib/python3.10/site-packages/torch/multiprocessing/spawn.py", line 211, in join
+    raise ProcessRaisedException(msg, error_index, failed_process.pid)
+torch.multiprocessing.spawn.ProcessRaisedException: 
+
+-- Process 3 terminated with the following error:
+Traceback (most recent call last):
+  File "/data/project/le-lab/conda_env/WSPIN_v2/lib/python3.10/site-packages/torch/multiprocessing/spawn.py", line 87, in _wrap
+    fn(i, *args)
+  File "/data/project/le-lab/fSWIFT/train.py", line 50, in worker_main
+    trainer.train()
+  File "/data/project/le-lab/fSWIFT/trainers.py", line 765, in train
+    loss, metrics = self.get_batch_metrics(local_microbatch, self.config.loss, train=True)
+  File "/data/project/le-lab/fSWIFT/trainers.py", line 660, in get_batch_metrics
+    policy_chosen_logps, policy_rejected_logps = self.concatenated_forward(self.policy, batch)
+  File "/data/project/le-lab/fSWIFT/trainers.py", line 503, in concatenated_forward
+    raise ValueError("concatenated_forward received an empty batch (0 examples). Check for empty responses in your dataset.")
+ValueError: concatenated_forward received an empty batch (0 examples). Check for empty responses in your dataset.
+
+
+Set the environment variable HYDRA_FULL_ERROR=1 for a complete stack trace.
