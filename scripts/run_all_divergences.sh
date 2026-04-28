@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --account=le-lab
-#SBATCH --gres=gpu:H100:8
-#SBATCH --mem=70GB
+#SBATCH --gres=gpu:L40S:8
+#SBATCH --mem=256GB
 #SBATCH --time=336:00:00
 #SBATCH --partition=general
 #SBATCH --output=run_all_divergences-%j.out
@@ -9,10 +9,11 @@
 #SBATCH --mail-user=tucnguye@iu.edu
 
 # ── Environment setup ────────────────────────────────────────────────────────
+# set -euo pipefail must come AFTER conda activate (conda may return non-zero)
 nvidia-smi
 eval "$(conda shell.bash hook)"
-conda activate /data/project/le-lab/conda_env/WSPIN
-export LD_PRELOAD=/data/project/le-lab/conda_env/WSPIN/lib/libstdc++.so.6 
+conda activate /data/project/le-lab/conda_env/WSPIN_v2
+export LD_PRELOAD=/data/project/le-lab/conda_env/WSPIN/lib/libstdc++.so.6
 
 set -euo pipefail
 
@@ -31,7 +32,7 @@ MAX_NEW=512
 FRAC_LEN=1000000
 FRAC=0
 WEIGHT_BATCH=16
-NUM_GPUS=8             # Updated: 8x L40S
+NUM_GPUS=8
 MAX_LENGTH=2048
 MAX_PROMPT_LENGTH=1024
 N_EPOCHS=2
@@ -116,12 +117,10 @@ run_divergence() {
             --batch_size        $WEIGHT_BATCH \
             --num_gpus          $NUM_GPUS
 
-        # Step 3: Train with f-SWIFT loss via FSDP across all 8 GPUs
+        # Step 3: Train with f-SWIFT loss
+        # train.py uses mp.spawn internally — do NOT use torchrun (causes double process manager → SIGTERM)
         echo "[${DIV}] ite${ITE} — Training..."
-        CUDA_VISIBLE_DEVICES=$GPU_IDS torchrun \
-            --nproc_per_node=$NUM_GPUS \
-            --master_port=$((29500 + ITE)) \
-            train.py \
+        CUDA_VISIBLE_DEVICES=$GPU_IDS python -u train.py \
             model=qwen \
             model.name_or_path="$PREV_MODEL" \
             loss=fswift \
@@ -149,7 +148,7 @@ echo "============================================================"
 echo " f-SWIFT: All-Divergence Training Run (SLURM)"
 echo " Node        : $(hostname)"
 echo " Divergences : ${ALL_DIVERGENCES[*]}"
-echo " GPUs        : $NUM_GPUS x L40S"
+echo " GPUs        : $NUM_GPUS x H100"
 echo " Started     : $(date)"
 echo " SKIP_EXISTING=${SKIP_EXISTING}"
 echo "============================================================"

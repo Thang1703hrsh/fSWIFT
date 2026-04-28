@@ -35,8 +35,8 @@ Token-level importance weighting from a teacher model is preserved from SWIFT, p
 
 ```bash
 # 1. Create conda environment
-conda env create -f environment.yml --prefix /data/project/le-lab/conda_env/WSPIN
-conda activate /data/project/le-lab/conda_env/WSPIN
+conda env create -f environment.yml --prefix /data/project/le-lab/conda_env/WSPIN_v2
+conda activate /data/project/le-lab/conda_env/WSPIN_v2
 
 # 2. Install lm-evaluation-harness (for evaluation)
 git clone https://github.com/EleutherAI/lm-evaluation-harness.git lm-evaluation-harness
