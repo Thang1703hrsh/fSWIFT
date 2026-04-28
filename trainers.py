@@ -856,7 +856,7 @@ class FSDPTrainer(BasicTrainer):
            Models are sharded at the block level, where the block class name is provided in the config.
         """
 
-        super().__init__(policy, config, seed, run_dir, ckpt_dir, reference_model, rank, world_size, transform_config=transform_config)
+        super().__init__(policy_tokenizer, policy, config, seed, run_dir, ckpt_dir, reference_model, rank, world_size, transform_config=transform_config)
         assert config.model.block_name is not None, 'must specify model.block_name (e.g., GPT2Block or GPTNeoXLayer) for FSDP'
 
         wrap_class = get_block_class_from_model(policy, config.model.block_name)
@@ -961,8 +961,8 @@ class TensorParallelTrainer(BasicTrainer):
            Based on https://github.com/BlackSamorez/tensor_parallel. Note sampling is extremely slow,
               see https://github.com/BlackSamorez/tensor_parallel/issues/66.
         """
-        super().__init__(policy, config, seed, run_dir, ckpt_dir, reference_model, rank, world_size, transform_config=transform_config)
-        
+        super().__init__(policy_tokenizer, policy, config, seed, run_dir, ckpt_dir, reference_model, rank, world_size, transform_config=transform_config)
+
         rank0_print('Sharding policy...')
         self.policy = tp.tensor_parallel(policy, sharded=True)
         if config.loss.name in {'dpo', 'ipo', 'tdpo', 'tisdpo', 'fswift'}:

@@ -23,6 +23,7 @@ generated-data/
 datasets/
 examples/
 models/
+PRISM/
 
 # ── Scratch / draft files ─────────────────────────────────────
 SWIFT.pdf
@@ -38,6 +39,7 @@ Miniconda3-latest-Linux-x86_64.sh
 zznote.txt
 tea_debug.log
 _test.py
+error.log
 
 # ── Scripts excluded from original repo ───────────────────────
 scripts/DPO-Training.sh
