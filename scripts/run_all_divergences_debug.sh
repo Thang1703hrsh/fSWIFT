@@ -21,8 +21,8 @@ cd "$REPO_ROOT"
 
 # ── Config (debug: ~500 samples) ─────────────────────────────────────────────
 MODEL_BASE="model_hub/Qwen1.5-1.8B"
-TEACHER="model_hub/zephyr-7b-sft-full"
-SFT_MODEL="${MODEL_BASE}/sft_v2"
+TEACHER="${REPO_ROOT}/model_hub/zephyr-7b-sft-full"
+SFT_MODEL="${REPO_ROOT}/${MODEL_BASE}/sft_v2"
 SFT_DATA="data/Ultrachat200k/SFT/trainSFT.jsonl"
 
 N_SAMPLES=500          # number of samples to generate per iteration
@@ -51,7 +51,7 @@ fi
 run_divergence() {
     local DIV="$1"
     # Use separate debug dirs so full-scale runs are not overwritten
-    local CKPT_BASE="${MODEL_BASE}/fSWIFT_${DIV}_debug"
+    local CKPT_BASE="${REPO_ROOT}/${MODEL_BASE}/fSWIFT_${DIV}_debug"
     local DATA_BASE="data/Ultrachat200k/fSWIFT_${DIV}_debug"
 
     echo ""
@@ -72,12 +72,19 @@ run_divergence() {
             PREV_ITE=$((ITE - 1))
             PREV_MODEL="${CKPT_BASE}/ite${PREV_ITE}"
         fi
+        if [ ! -d "$PREV_MODEL" ]; then
+            echo "ERROR: PREV_MODEL not found: $PREV_MODEL" >&2
+            exit 1
+        fi
 
-        DATASETS="[\"Ultrachat200k/fSWIFT_${DIV}_debug/ite0\""
-        for D in $(seq 1 $ITE); do
-            DATASETS="${DATASETS},\"Ultrachat200k/fSWIFT_${DIV}_debug/ite${D}\""
-        done
-        DATASETS="${DATASETS}]"
+        # Build dataset list: SPIN sliding window — previous iter + current iter only
+        # ite0: [ite0], ite1+: [ite(N-1), iteN]
+        if [ "$ITE" -eq 0 ]; then
+            DATASETS="[\"Ultrachat200k/fSWIFT_${DIV}_debug/ite0\"]"
+        else
+            PREV_ITE=$((ITE - 1))
+            DATASETS="[\"Ultrachat200k/fSWIFT_${DIV}_debug/ite${PREV_ITE}\",\"Ultrachat200k/fSWIFT_${DIV}_debug/ite${ITE}\"]"
+        fi
 
         if [ "$ITE" -le 1 ]; then
             LR=5e-7
@@ -133,6 +140,22 @@ run_divergence() {
             n_examples=$N_EXAMPLES \
             lr=$LR \
             iteration=$ITE
+
+        # FSDPTrainer saves to output/**/.../ite<N>_<timestamp>/ (nested path, not predictable)
+        if [ ! -f "${CKPT_BASE}/ite${ITE}/model.safetensors" ] && \
+           [ ! -f "${CKPT_BASE}/ite${ITE}/model-00001-of-00002.safetensors" ]; then
+            LATEST_OUT=$(find "${REPO_ROOT}/output" -maxdepth 6 -type d -name "ite${ITE}_*" \
+                         -newer "${REPO_ROOT}/scripts/run_all_divergences_debug.sh" \
+                         2>/dev/null | xargs ls -dt 2>/dev/null | head -1)
+            if [ -n "$LATEST_OUT" ] && [ -d "$LATEST_OUT" ]; then
+                echo "[${DIV}] ite${ITE} — Copying checkpoint: ${LATEST_OUT} → ${CKPT_BASE}/ite${ITE}/"
+                mkdir -p "${CKPT_BASE}/ite${ITE}"
+                cp -r "${LATEST_OUT%/}"/. "${CKPT_BASE}/ite${ITE}/"
+            else
+                echo "ERROR: checkpoint not found in output/ after training ite${ITE}" >&2
+                exit 1
+            fi
+        fi
 
         echo "[${DIV}] ite${ITE} — Done: $(date)"
     done
