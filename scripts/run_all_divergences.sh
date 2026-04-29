@@ -40,7 +40,7 @@ N_EPOCHS=2
 SKIP_EXISTING="${SKIP_EXISTING:-0}"
 GPU_IDS="0,1,2,3,4,5,6,7"
 
-ALL_DIVERGENCES=(js kl wasserstein)
+ALL_DIVERGENCES=(js kl hellinger)
 
 # If a specific divergence is passed as argument, run only that one
 if [ $# -ge 1 ]; then

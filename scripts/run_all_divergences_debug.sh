@@ -28,7 +28,7 @@ SFT_DATA="data/Ultrachat200k/SFT/trainSFT.jsonl"
 N_SAMPLES=500          # number of samples to generate per iteration
 N_EXAMPLES=500         # number of training examples used by train.py
 
-BATCH=8
+BATCH=16
 GRAD_ACCUM=2
 MAX_NEW=256
 FRAC=0
