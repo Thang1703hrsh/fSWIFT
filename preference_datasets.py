@@ -69,13 +69,18 @@ def rank_based_transform(nums, min_scale=0.7, max_scale=1.3):
     final_result = [result[sorted_indices.index(i)] for i in range(len(nums))]
     return final_result
 
+def reverse_weight_transform(nums):
+    # Inverts SWIFT weights: w → 1 - w (tokens important to teacher get lower weight)
+    return [1.0 - w for w in nums]
+
 weight_transform_methods = {
     'origin': lambda x: x,
     'binary': binary_weight_transform,
     'threshold': threshold_weight_transform,
     'threshold_and_scale': threshold_and_scale_transform,
     'random': random_weight_transform,
-    'rank_based': rank_based_transform
+    'rank_based': rank_based_transform,
+    'reverse': reverse_weight_transform,
 }
 
 

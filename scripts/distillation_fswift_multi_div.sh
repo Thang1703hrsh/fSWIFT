@@ -25,7 +25,7 @@ N_EPOCHS_SFT=2
 N_EPOCHS_FSWIFT=2
 
 # ── Divergences ───────────────────────────────────────────────
-DIVERGENCES=(js kl wasserstein)
+DIVERGENCES=(js)
 
 # ── Results ──────────────────────────────────────────────────
 RESULTS_DIR="eval_results/distillation_sft_then_fswift"

@@ -3,6 +3,6 @@ tokenizer_name_or_path: null
 archive: null
 block_name: MistralDecoderLayer
 
-policy_dtype: float32
+policy_dtype: bfloat16
 fsdp_policy_mp: null
 reference_dtype: float16

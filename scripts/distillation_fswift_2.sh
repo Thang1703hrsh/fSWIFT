@@ -5,19 +5,21 @@ REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_ROOT"
 
 # ── Models ───────────────────────────────────────────────────
-TEACHER="${TEACHER:-model_hub/Qwen2.5-7B-Instruct}"
-STUDENT_BASE="${STUDENT_BASE:-model_hub/gpt2-xl}"
-STUDENT_SFT="${STUDENT_SFT:-model_hub/gpt2-xl/sft}"
-STUDENT_OUT="${STUDENT_OUT:-model_hub/gpt2-xl/sft_then_fswift}"
+TEACHER="${TEACHER:-model_hub/Qwen1.5-1.8B/sft-distill}"
+STUDENT_BASE="${STUDENT_BASE:-model_hub/gpt2-medium/sft}"
+STUDENT_SFT="${STUDENT_SFT:-model_hub/gpt2-medium/sft}"
+STUDENT_OUT="${STUDENT_OUT:-model_hub/gpt2-medium/sft_then_fswift}"
 
 # ── Data ─────────────────────────────────────────────────────
-DATA_ROOT="data/distillation"
+# Separate DATA_ROOT to avoid conflicts with other distillation runs
+# (gpt2-xl run uses data/distillation; this run uses data/distillation_gpt2medium)
+DATA_ROOT="data/distillation_gpt2medium"
 DATASETS=(dolly alpaca sni dialoguesum)
 
 # ── Hyperparams ───────────────────────────────────────────────
-BATCH=4
-GRAD_ACCUM=2                  # effective batch size = BATCH * GRAD_ACCUM = 8
-WEIGHT_BATCH=4
+BATCH=32
+GRAD_ACCUM=16                 # effective batch size = 32, microbatch = 2/step
+WEIGHT_BATCH=16
 NUM_GPUS=1
 MAX_LENGTH=1024
 MAX_PROMPT_LENGTH=768
@@ -28,7 +30,7 @@ N_EPOCHS_FSWIFT=2
 F_DIVERGENCE="${F_DIVERGENCE:-js}"
 
 # ── Results ──────────────────────────────────────────────────
-RESULTS_DIR="eval_results/distillation_sft_then_fswift"
+RESULTS_DIR="eval_results/distillation_qwen18b_gpt2medium"
 
 echo "============================================================"
 echo " SFT → f-SWIFT Distillation Pipeline"
@@ -39,39 +41,23 @@ echo " Started : $(date)"
 echo "============================================================"
 
 # ────────────────────────────────────────────────────────────
-# Step 1: Download student model (gpt2-xl)
+# Step 1: Check student model (gpt2-medium/sft)
 # ────────────────────────────────────────────────────────────
 if [ ! -d "$STUDENT_BASE" ]; then
-    echo ""
-    echo "===== Step 1: Downloading gpt2-xl ====="
-    mkdir -p "$STUDENT_BASE"
-    python -c "
-from transformers import AutoTokenizer, AutoModelForCausalLM
-tok = AutoTokenizer.from_pretrained('gpt2-xl')
-tok.save_pretrained('$STUDENT_BASE')
-model = AutoModelForCausalLM.from_pretrained('gpt2-xl')
-model.save_pretrained('$STUDENT_BASE')
-print('Saved to $STUDENT_BASE')
-"
+    echo "ERROR: Student model not found at $STUDENT_BASE"
+    echo "Please run SFT for gpt2-medium first."
+    exit 1
 else
     echo "[SKIP] Student model already at $STUDENT_BASE"
 fi
 
 # ────────────────────────────────────────────────────────────
-# Step 2: Download teacher model (Qwen2.5-7B-Instruct)
+# Step 2: Check teacher model (Qwen1.5-1.8B/sft-distill)
 # ────────────────────────────────────────────────────────────
 if [ ! -d "$TEACHER" ]; then
-    echo ""
-    echo "===== Step 2: Downloading Qwen2.5-7B-Instruct ====="
-    mkdir -p "$TEACHER"
-    python -c "
-from transformers import AutoTokenizer, AutoModelForCausalLM
-tok = AutoTokenizer.from_pretrained('Qwen/Qwen2.5-7B-Instruct')
-tok.save_pretrained('$TEACHER')
-model = AutoModelForCausalLM.from_pretrained('Qwen/Qwen2.5-7B-Instruct')
-model.save_pretrained('$TEACHER')
-print('Saved to $TEACHER')
-"
+    echo "ERROR: Teacher model not found at $TEACHER"
+    echo "Please run SFT for Qwen1.5-1.8B first."
+    exit 1
 else
     echo "[SKIP] Teacher model already at $TEACHER"
 fi
@@ -94,9 +80,7 @@ if [ "$DATASETS_PREPARED" = "1" ]; then
     echo "[SKIP] All datasets already prepared."
 else
     python distill_data_prep.py \
-        --out_dir "$DATA_ROOT" \
-        --n_train 10000 \
-        --n_test  500
+        --out_dir "$DATA_ROOT"
 fi
 
 # ────────────────────────────────────────────────────────────
@@ -131,8 +115,8 @@ done
 
 # ────────────────────────────────────────────────────────────
 # Step 5: Compute token importance weights
-#   Teacher = Qwen2.5-7B-Instruct (model_1)
-#   Student = gpt2-xl base        (model_2)
+#   Teacher = Qwen1.5-1.8B/sft-distill (model_1)
+#   Student = gpt2-medium/sft           (model_2)
 # ────────────────────────────────────────────────────────────
 echo ""
 echo "===== Step 5: Computing token importance weights ====="
@@ -174,7 +158,7 @@ if [ -f "${STUDENT_SFT}/config.json" ]; then
     echo "[SKIP] SFT student already at $STUDENT_SFT"
 else
     python -u train.py \
-        model=gpt2-xl-distill \
+        model=gpt2-medium \
         model.name_or_path="${STUDENT_BASE}" \
         loss=sft \
         base_data_dir=data \
@@ -192,7 +176,7 @@ fi
 
 # ────────────────────────────────────────────────────────────
 # Step 6b: f-SWIFT from SFT checkpoint
-#   Policy     = SFT student (π_θ₀ = gpt2-xl/sft)
+#   Policy     = SFT student (π_θ₀ = gpt2-medium/sft)
 #   Reference  = SFT student (same, frozen)
 # ────────────────────────────────────────────────────────────
 echo ""
@@ -202,7 +186,7 @@ if [ -f "${STUDENT_OUT}/config.json" ]; then
     echo "[SKIP] f-SWIFT student already at $STUDENT_OUT"
 else
     python -u train.py \
-        model=gpt2-xl-distill \
+        model=gpt2-medium \
         model.name_or_path="${STUDENT_SFT}" \
         loss=fswift \
         loss.f_divergence="${F_DIVERGENCE}" \

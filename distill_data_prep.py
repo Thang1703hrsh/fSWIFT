@@ -8,18 +8,12 @@ Prepare the four distillation benchmark datasets used in the paper (Table KD_Rou
 Each dataset is saved as JSONL with fields:
   {"prompt": "...", "chosen": "...", "rejected": "..."}
 
-The "chosen" field is the ground-truth response.
-The "rejected" field is a placeholder (same as chosen) — in the distillation
-setting SWIFT uses only the teacher's token weights computed offline; the
-preferred/rejected split is used by the training pipeline but the rejected
-response will be overwritten by student-generated outputs during token weight
-estimation (token_weight_estimation.py uses both chosen and rejected).
-
-For the distillation experiment the pipeline is:
-  1. Prepare data (this script)
-  2. Compute token weights offline using teacher (Qwen2.5-7B-Instruct)
-  3. Train student (GPT2-1.5B / gpt2-xl) with fswift loss
-  4. Evaluate with ROUGE-L (eval_rouge.py)
+Split sizes (from paper):
+  Dataset     Train   Valid   Test
+  Dolly       11,435  1,000   500
+  Alpaca      10,396  500     500
+  S-NI        10,414  500     1,902
+  DialogSum   12,460  500     1,500
 """
 
 import os
@@ -41,17 +35,13 @@ def save_jsonl(data, path):
 
 
 def make_example(prompt, response):
-    """Wrap into the format expected by preference_datasets.py.
-    'rejected' is set to chosen as a placeholder — distillation.sh overwrites
-    it with student-generated responses via generate_vllm.py before calling
-    token_weight_estimation.py."""
     return {"prompt": prompt.strip(), "chosen": response.strip(), "rejected": response.strip()}
 
 
 # ─────────────────────────────────────────────
-# Dolly  (databricks/databricks-dolly-15k)
+# Dolly  — Train: 11435 | Valid: 1000 | Test: 500
 # ─────────────────────────────────────────────
-def prep_dolly(out_dir, n_train=10000, n_test=500):
+def prep_dolly(out_dir):
     print("Preparing Dolly...")
     ds = load_dataset("databricks/databricks-dolly-15k", split="train")
     examples = []
@@ -64,14 +54,15 @@ def prep_dolly(out_dir, n_train=10000, n_test=500):
         prompt = f"{instruction}\n{context}".strip() if context else instruction
         examples.append(make_example(prompt, response))
     random.shuffle(examples)
-    save_jsonl(examples[:n_train], f"{out_dir}/dolly/train.jsonl")
-    save_jsonl(examples[n_train:n_train + n_test], f"{out_dir}/dolly/test.jsonl")
+    save_jsonl(examples[:11435],              f"{out_dir}/dolly/train.jsonl")
+    save_jsonl(examples[11435:12435],         f"{out_dir}/dolly/valid.jsonl")
+    save_jsonl(examples[12435:12935],         f"{out_dir}/dolly/test.jsonl")
 
 
 # ─────────────────────────────────────────────
-# Alpaca  (tatsu-lab/alpaca)
+# Alpaca  — Train: 10396 | Valid: 500 | Test: 500
 # ─────────────────────────────────────────────
-def prep_alpaca(out_dir, n_train=10000, n_test=500):
+def prep_alpaca(out_dir):
     print("Preparing Alpaca...")
     ds = load_dataset("tatsu-lab/alpaca", split="train")
     examples = []
@@ -84,15 +75,15 @@ def prep_alpaca(out_dir, n_train=10000, n_test=500):
         prompt = f"{instruction}\n{inp}".strip() if inp else instruction
         examples.append(make_example(prompt, output))
     random.shuffle(examples)
-    save_jsonl(examples[:n_train], f"{out_dir}/alpaca/train.jsonl")
-    save_jsonl(examples[n_train:n_train + n_test], f"{out_dir}/alpaca/test.jsonl")
+    save_jsonl(examples[:10396],              f"{out_dir}/alpaca/train.jsonl")
+    save_jsonl(examples[10396:10896],         f"{out_dir}/alpaca/valid.jsonl")
+    save_jsonl(examples[10896:11396],         f"{out_dir}/alpaca/test.jsonl")
 
 
 # ─────────────────────────────────────────────
-# S-NI  (Super-Natural Instructions)
-# Uses the community mirror: Muennighoff/natural-instructions
+# S-NI  — Train: 10414 | Valid: 500 | Test: 1902
 # ─────────────────────────────────────────────
-def prep_sni(out_dir, n_train=10000, n_test=500):
+def prep_sni(out_dir):
     print("Preparing S-NI (Super-Natural Instructions)...")
     ds = load_dataset("Muennighoff/natural-instructions", split="train")
     examples = []
@@ -108,17 +99,20 @@ def prep_sni(out_dir, n_train=10000, n_test=500):
         prompt = f"{definition}\n\nInput: {inputs}" if definition else f"Input: {inputs}"
         examples.append(make_example(prompt, targets))
     random.shuffle(examples)
-    save_jsonl(examples[:n_train], f"{out_dir}/sni/train.jsonl")
-    save_jsonl(examples[n_train:n_train + n_test], f"{out_dir}/sni/test.jsonl")
+    save_jsonl(examples[:10414],              f"{out_dir}/sni/train.jsonl")
+    save_jsonl(examples[10414:10914],         f"{out_dir}/sni/valid.jsonl")
+    save_jsonl(examples[10914:12816],         f"{out_dir}/sni/test.jsonl")
 
 
 # ─────────────────────────────────────────────
-# DialogueSum  (knkarthick/dialogsum)
+# DialogueSum  — Train: 12460 | Valid: 500 | Test: 1500
+# Uses official train/validation/test splits
 # ─────────────────────────────────────────────
-def prep_dialoguesum(out_dir, n_test=500):
+def prep_dialoguesum(out_dir):
     print("Preparing DialogueSum...")
     train_ds = load_dataset("knkarthick/dialogsum", split="train")
-    test_ds  = load_dataset("knkarthick/dialogsum", split="test")
+    valid_ds  = load_dataset("knkarthick/dialogsum", split="validation")
+    test_ds   = load_dataset("knkarthick/dialogsum", split="test")
 
     def process(ds):
         out = []
@@ -132,38 +126,35 @@ def prep_dialoguesum(out_dir, n_test=500):
         return out
 
     train_ex = process(train_ds)
+    valid_ex = process(valid_ds)
     test_ex  = process(test_ds)
+
     random.shuffle(train_ex)
-    save_jsonl(train_ex, f"{out_dir}/dialoguesum/train.jsonl")
-    save_jsonl(test_ex[:n_test], f"{out_dir}/dialoguesum/test.jsonl")
+    save_jsonl(train_ex[:12460],   f"{out_dir}/dialoguesum/train.jsonl")
+    save_jsonl(valid_ex[:500],     f"{out_dir}/dialoguesum/valid.jsonl")
+    save_jsonl(test_ex[:1500],     f"{out_dir}/dialoguesum/test.jsonl")
 
 
 def main():
     parser = argparse.ArgumentParser(description="Prepare distillation benchmark datasets.")
-    parser.add_argument("--out_dir", type=str, default="data/distillation",
-                        help="Root output directory for all datasets.")
-    parser.add_argument("--n_train", type=int, default=10000,
-                        help="Max training examples per dataset (Dolly/Alpaca/S-NI).")
-    parser.add_argument("--n_test", type=int, default=500,
-                        help="Test examples per dataset.")
+    parser.add_argument("--out_dir", type=str, default="data/distillation")
     parser.add_argument("--datasets", nargs="+",
                         default=["dolly", "alpaca", "sni", "dialoguesum"],
-                        choices=["dolly", "alpaca", "sni", "dialoguesum"],
-                        help="Which datasets to prepare.")
+                        choices=["dolly", "alpaca", "sni", "dialoguesum"])
     args = parser.parse_args()
 
     if "dolly" in args.datasets:
-        prep_dolly(args.out_dir, args.n_train, args.n_test)
+        prep_dolly(args.out_dir)
     if "alpaca" in args.datasets:
-        prep_alpaca(args.out_dir, args.n_train, args.n_test)
+        prep_alpaca(args.out_dir)
     if "sni" in args.datasets:
-        prep_sni(args.out_dir, args.n_train, args.n_test)
+        prep_sni(args.out_dir)
     if "dialoguesum" in args.datasets:
-        prep_dialoguesum(args.out_dir, args.n_test)
+        prep_dialoguesum(args.out_dir)
 
     print("\nAll datasets prepared.")
     print(f"Data root: {args.out_dir}/")
-    print("Each dataset has train.jsonl and test.jsonl with fields: prompt, chosen, rejected")
+    print("Each dataset has train.jsonl, valid.jsonl, test.jsonl")
 
 
 if __name__ == "__main__":

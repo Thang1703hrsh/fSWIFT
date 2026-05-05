@@ -24,6 +24,7 @@ datasets/
 examples/
 models/
 PRISM/
+TIDPO/
 
 # ── Scratch / draft files ─────────────────────────────────────
 SWIFT.pdf

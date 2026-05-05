@@ -51,7 +51,7 @@ def main():
         tensor_parallel_size=world_size,
         dtype="float16",
         max_model_len=_max_len,
-        gpu_memory_utilization=0.9
+        gpu_memory_utilization=0.75
     )
 
     sampling_params = SamplingParams(temperature=1.0, top_p=1.0, max_tokens=args.max_new_tokens)
