@@ -2,7 +2,7 @@ from pathlib import Path
 from huggingface_hub import snapshot_download
 
 # Local root directory
-ROOT_DIR = Path("/media/volume/tuc_data/self_play_LLMs/f-SWIFT/models")
+ROOT_DIR = Path("/data/project/le-lab/fSWIFT/model_hub")
 
 # Hugging Face repo_id -> local folder name
 MODELS = {
