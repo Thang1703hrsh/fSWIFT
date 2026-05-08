@@ -1,5 +1,4 @@
 #!/bin/bash
-set -euo pipefail
 
 # ============================================================
 # CO-CRAFT Span-Level: Self-Play with f'-critic span weights
@@ -12,10 +11,13 @@ set -euo pipefail
 # Model   : Qwen2.5-7B-Instruct
 # ============================================================
 
-# ── Environment (must come before set -euo pipefail catches conda errors) ──
+# ── Environment — conda must activate BEFORE set -euo pipefail ──
+# conda shell hook may return non-zero; -e would abort the script.
 eval "$(conda shell.bash hook)"
 conda activate /data/project/le-lab/conda_env/WSPIN_v2
 export LD_PRELOAD=/data/project/le-lab/conda_env/WSPIN/lib/libstdc++.so.6
+
+set -euo pipefail
 
 REPO_ROOT="/data/project/le-lab/fSWIFT"
 cd "$REPO_ROOT"
@@ -25,8 +27,8 @@ SFT_MODEL="${REPO_ROOT}/model_hub/Qwen2.5-7B-Instruct/base"
 SFT_DATA="data/Ultrachat200k/SFT/trainSFT.jsonl"
 
 CKPT_BASE="model_hub/Qwen2.5-7B-Instruct/cocraft_span_js"
-DATA_BASE="data/Ultrachat200k/cocraft_span_js"
-DSET_BASE="Ultrachat200k/cocraft_span_js"
+DATA_BASE="data/Ultrachat200k/qwen7b_cocraft_span_js"
+DSET_BASE="Ultrachat200k/qwen7b_cocraft_span_js"
 
 # ── Hardware ─────────────────────────────────────────────────
 GPU_IDS_TRAIN="4,5,6,7"   # GPUs 4-7 for FSDPTrainer (GPUs 0-3 used by Mistral)

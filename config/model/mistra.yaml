@@ -5,4 +5,4 @@ block_name: MistralDecoderLayer
 
 policy_dtype: bfloat16
 fsdp_policy_mp: null
-reference_dtype: float16
+reference_dtype: bfloat16

@@ -756,6 +756,7 @@ class BasicTrainer(object):
         self.run_dir = run_dir
         self.ckpt_dir = ckpt_dir
         self.base_data_dir = config.base_data_dir
+        self._current_iteration = config.get('iteration', 0)
 
         tokenizer_name_or_path = config.model.tokenizer_name_or_path or config.model.name_or_path
         rank0_print(f'Loading tokenizer {tokenizer_name_or_path}')

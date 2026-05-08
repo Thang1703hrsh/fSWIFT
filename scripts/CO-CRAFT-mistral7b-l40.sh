@@ -1,5 +1,4 @@
 #!/bin/bash
-set -euo pipefail
 
 # ============================================================
 # CO-CRAFT Span-Level: Self-Play with f'-critic span weights
@@ -12,10 +11,13 @@ set -euo pipefail
 # Model   : Mistral-7B-v0.1
 # ============================================================
 
-# ── Environment (must come before set -euo pipefail catches conda errors) ──
+# ── Environment — conda must activate BEFORE set -euo pipefail ──
+# conda shell hook may return non-zero; -e would abort the script.
 eval "$(conda shell.bash hook)"
 conda activate /data/project/le-lab/conda_env/WSPIN_v2
 export LD_PRELOAD=/data/project/le-lab/conda_env/WSPIN/lib/libstdc++.so.6
+
+set -euo pipefail
 
 REPO_ROOT="/data/project/le-lab/fSWIFT"
 cd "$REPO_ROOT"
@@ -25,8 +27,8 @@ SFT_MODEL="${REPO_ROOT}/model_hub/Mistral-7B-v0.1/base"
 SFT_DATA="data/Ultrachat200k/SFT/trainSFT.jsonl"
 
 CKPT_BASE="model_hub/Mistral-7B/cocraft_span_js"
-DATA_BASE="data/Ultrachat200k/cocraft_span_js"
-DSET_BASE="Ultrachat200k/cocraft_span_js"
+DATA_BASE="data/Ultrachat200k/mistral7b_cocraft_span_js"
+DSET_BASE="Ultrachat200k/mistral7b_cocraft_span_js"
 
 # ── Hardware ─────────────────────────────────────────────────
 GPU_IDS_TRAIN="0,1,2,3"   # all 4 L40S for FSDPTrainer
@@ -36,8 +38,8 @@ NUM_GPUS=4
 # ── Training hyper-parameters ────────────────────────────────
 # BATCH=64, GRAD_ACCUM=4, NUM_GPUS=4:
 #   per-GPU microbatch = 64 / (4 accum × 4 GPUs) = 4 samples
-#   concat forward per GPU: 2B = 8  →  logits bf16 = 4.7 GiB  (fits in 48 GB)
-#   gradient buffer fp32   = 9.4 GiB per GPU (fits in 48 GB)
+#   concat forward per GPU: 2B = 8  →  logits bf16 = 0.98 GiB  (Mistral vocab=32K, fits easily)
+#   gradient buffer fp32   = 1.96 GiB per GPU; total est. ~34 GiB/GPU (48 GB headroom ~14 GiB)
 BATCH=64
 GRAD_ACCUM=4
 N_EPOCHS=2
