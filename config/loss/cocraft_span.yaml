@@ -1,0 +1,48 @@
+# CO-CRAFT Span-Level Loss
+# Outer objective: f-SWIFT (beta*S_c - f*(beta*S_r))
+# Inner importance: span-level centered f-critic (f'(exp(delta)) - f'(1))
+name: cocraft_span
+
+# Temperature for the outer f-SWIFT objective.
+beta: 0.1
+
+# Label smoothing (0 = standard loss).
+label_smoothing: 0
+
+# If true, ignore the reference model (uniform reference).
+reference_free: false
+
+# f-divergence for BOTH the outer f* conjugate AND the inner f' critic.
+# options: identity, kl, js, chi2, hellinger, wasserstein
+f_divergence: js
+
+# (optional) adaptive f-scheduling across self-play iterations.
+# f_schedule:
+#   - from_iter: 0
+#     f_divergence: js
+#   - from_iter: 2
+#     f_divergence: kl
+
+# ── Span segmentation ──────────────────────────────────────────────────────────
+# Span strategy: 'fixed', 'sentence', or 'clause'.
+#   fixed:    uniform K-token blocks (fastest, recommended default).
+#   sentence: split at sentence-ending punctuation (., !, ?).
+#   clause:   split at sentence + clause boundaries (., !, ?, ,, ;, :).
+span_strategy: fixed
+
+# Number of tokens per span (used only when span_strategy=fixed).
+# Recommended: 4–32. Default 8 balances granularity and noise.
+span_size: 8
+
+# ── Span critic hyper-parameters (§9 of CO_CRAFT_span_level.md) ───────────────
+# mu: exponentiation temperature applied to the clipped critic score.
+# Recommended: 0.5 (conservative) or 1.0 (standard).
+mu: 1.0
+
+# Clamp range for critic score a = f'(exp(delta)) - f'(1) before exponentiation.
+span_L: -2.0
+span_U: 2.0
+
+# Final span-weight clip range after mean-normalization.
+span_g_min: 0.25
+span_g_max: 4.0

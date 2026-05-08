@@ -127,11 +127,11 @@ def main(config: DictConfig):
         policy.gradient_checkpointing_enable()
         print('Gradient checkpointing enabled for policy')
 
-    if config.loss.name in {'dpo', 'ipo', 'tdpo', 'tisdpo', 'fswift'}:
+    if config.loss.name in {'dpo', 'ipo', 'tdpo', 'tisdpo', 'fswift', 'cocraft_span'}:
         print('building reference model')
         reference_model_dtype = getattr(torch, config.model.reference_dtype)
-        # Load reference model on CPU to save GPU VRAM; BasicTrainer moves batches to GPU when needed
-        ref_kwargs = {'device_map': 'cpu'} if config.trainer == 'BasicTrainer' else model_kwargs
+        # Load reference model on GPU same as policy (CPU offload was too slow on H100).
+        ref_kwargs = model_kwargs
         reference_model = transformers.AutoModelForCausalLM.from_pretrained(
             config.model.name_or_path, low_cpu_mem_usage=True, torch_dtype=reference_model_dtype, **ref_kwargs)
         disable_dropout(reference_model)

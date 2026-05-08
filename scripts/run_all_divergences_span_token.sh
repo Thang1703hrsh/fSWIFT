@@ -2,7 +2,7 @@
 #SBATCH --account=le-lab
 #SBATCH --gres=gpu:L40S:8
 #SBATCH --mem=256GB
-#SBATCH --time=72:00:00
+#SBATCH --time=336:00:00
 #SBATCH --partition=general
 #SBATCH --output=run_all_divergences-%j.out
 #SBATCH --mail-type=END,FAIL
